@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hgu_21_2_mobileappdevelopment/store_detail.dart';
 
 import 'home.dart';
 import 'login.dart';
@@ -8,6 +9,9 @@ import 'favorite.dart';
 import 'myReview.dart';
 import 'anouncement.dart';
 import 'setting.dart';
+import 'store.dart';
+import 'store_detail.dart';
+import 'add_review.dart';
 
 class BraveApp extends StatelessWidget {
   BraveApp({Key? key}) : super(key: key);
@@ -31,6 +35,9 @@ class BraveApp extends StatelessWidget {
         '/myReview': (context) => MyReviewPage(),
         '/anouncement': (context) => AnouncementPage(),
         '/settings': (context) => SettingPage(),
+        '/store': (context) => Store(),
+        '/storeDetail' : (context) => StoreDetail(),
+        AddReview.routeName: (context) => const AddReview(),
       },
     );
   }

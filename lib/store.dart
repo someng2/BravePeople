@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'store_detail.dart';
 
-class Store_id{
+class Store_id {
   final int store_id;
 
   Store_id(this.store_id);
@@ -11,10 +11,6 @@ class Store_id{
 
 class Store extends StatefulWidget {
   const Store({Key? key}) : super(key: key);
-
-  // final int store_id;
-  //
-  // Store(this.store_id);
 
   @override
   _StoreState createState() => _StoreState();
@@ -27,12 +23,23 @@ class _StoreState extends State<Store> {
         length: 6,
         child: Scaffold(
           appBar: AppBar(
+            toolbarHeight: 80,
+            backgroundColor: Colors.white,
+            iconTheme: const IconThemeData(
+              color: Colors.black,
+            ),
+            // foregroundColor: Colors.black,
             bottom: const PreferredSize(
               child: TabBar(
                   isScrollable: true,
-                  indicatorColor: Colors.white,
+                  indicatorColor: Color(0xffc0e2af),
+                  //unselectedLabelColor: Color(0x00c0e2af),
+                  labelColor: Colors.black,
+
                   tabs: [
-                    Tab(text: '한식'),
+                    Tab(
+                      text: '한식',
+                    ),
                     Tab(text: '아시안・양식'),
                     Tab(text: '중식'),
                     Tab(text: '일식'),
@@ -57,7 +64,6 @@ class _StoreState extends State<Store> {
 }
 
 Widget _buildTabBarView(String category) {
-
   return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('store')
@@ -74,7 +80,7 @@ Widget _buildTabBarView(String category) {
         return ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
-            document.data()! as Map<String, dynamic>;
+                document.data()! as Map<String, dynamic>;
             return Column(
               children: [
                 ListTile(
@@ -91,33 +97,38 @@ Widget _buildTabBarView(String category) {
                     children: [
                       Row(
                         children: [
-                          Text(data['menu'][0], style: const TextStyle(fontSize: 11),),
-                          const Text(',', style: TextStyle(fontSize: 11),),
-                          Text(data['menu'][1], style: const TextStyle(fontSize: 11),),
-
+                          Text(
+                            data['menu'][0],
+                            style: const TextStyle(fontSize: 11),
+                          ),
+                          const Text(
+                            ', ',
+                            style: TextStyle(fontSize: 11),
+                          ),
+                          Text(
+                            data['menu'][1],
+                            style: const TextStyle(fontSize: 11),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 10),
                       Text(data['business_time']),
                     ],
                   ),
-                  trailing: IconButton(onPressed: (){
-                    Navigator.pushNamed(
-                      context,
-                      Store_Detail.routeName,
-                      arguments: Store_id(
-                        data['store_id']
-                      ),
-                    );
-                  }, icon: const Icon(Icons.navigate_next)),
+                  trailing: IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          StoreDetail.routeName,
+                          arguments: Store_id(data['store_id']),
+                        );
+                      },
+                      icon: const Icon(Icons.navigate_next)),
                 ),
                 const Divider(),
               ],
-
             );
           }).toList(),
         );
       });
 }
-
-

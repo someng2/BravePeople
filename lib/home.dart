@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                           icon: Icon(Icons.restaurant, size: 100),
                           onPressed: () {
                             //제휴점으로 가야함
-                            //Navigator.pushNamed(context, '/login');
+                            Navigator.pushNamed(context, '/store');
                           },
                       ),
                       const SizedBox(height: 100.0),

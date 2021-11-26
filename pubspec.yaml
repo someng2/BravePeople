@@ -15,7 +15,8 @@ dependencies:
   firebase_auth: ^3.2.0
   cloud_firestore: ^3.1.0
   provider: ^6.0.1
-  google_sign_in: ^5.2.1
+#  google_sign_in: ^5.2.1
+  google_sign_in: ^5.0.4
 
 dev_dependencies:
   flutter_test:
@@ -28,5 +29,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/earth.jpeg
+#    - assets/earth.jpeg
     - assets/heart.jpeg

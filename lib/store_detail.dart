@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'store.dart';
+import 'add_review.dart';
 
-class Store_Detail extends StatefulWidget {
-  const Store_Detail({Key? key}) : super(key: key);
+class StoreDetail extends StatefulWidget {
+  const StoreDetail({Key? key}) : super(key: key);
 
   static const routeName = '/storeDetail';
 
   @override
-  _Store_DetailState createState() => _Store_DetailState();
+  _StoreDetailState createState() => _StoreDetailState();
 }
 
-class _Store_DetailState extends State<Store_Detail> {
+class _StoreDetailState extends State<StoreDetail> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Store_id;
@@ -33,11 +34,20 @@ class _Store_DetailState extends State<Store_Detail> {
           return DefaultTabController(
             length: 3,
             child: Scaffold(
-              appBar: AppBar(),
+              appBar: AppBar(
+                toolbarHeight: 80,
+                backgroundColor: Colors.white,
+                iconTheme: const IconThemeData(
+                  color: Colors.black,
+                ),
+                elevation: 0,
+              ),
               body: ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
+                  int menu_length = data['menu'].length;
+
                   return Column(
                     children: [
                       Column(children: [
@@ -81,8 +91,14 @@ class _Store_DetailState extends State<Store_Detail> {
                         SizedBox(
                           height: 50,
                           child: AppBar(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black,
+                            elevation: 2,
+
                             bottom: const PreferredSize(
                               child: TabBar(
+                                labelColor: Colors.black,
+                                indicatorColor: Color(0xffc0e2af),
                                 tabs: [
                                   Tab(
                                     text: '메뉴',
@@ -100,31 +116,87 @@ class _Store_DetailState extends State<Store_Detail> {
                           ),
                         ), // create widgets for each tab bar here
                         SizedBox(
-                            height: 400,
+                            height: 200,
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(10.0),
                               child: TabBarView(children: [
                                 // first tab bar view widget
                                 Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                        for (var menu in data['menu']) Text(menu),
-                                        for (var price in data['price']) Text(price),
+                                      for (int i = 0; i < menu_length; i++)
+                                        Row(children: [
+                                          SizedBox(
+                                            child: Text(data['menu'][i]),
+                                            width: 200,
+                                          ),
+                                          //SizedBox(width: 150),
+                                          Row(
+                                            children: [
+                                              Text(data['price'][i]),
+                                              const Text('원')
+                                            ],
+                                          ),
+                                        ]),
                                     ]),
                                 // second tab bar view widget
-                                Container(
-                                  child: Text(data['detail'],
-                                      style: TextStyle(fontSize: 15)),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text('주소: '),
+                                        Text(data['address_gu']),
+                                        const Text(' '),
+                                        Text(data['address']),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text('영업시간: '),
+                                        Text(data['business_time']),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Row(
+                                      children: [
+                                        const Text('* '),
+                                        Flexible(
+                                          child: Text(data['detail'],
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                Row(children: [
-                                  Text(
-                                    '리뷰',
-                                  ),
-                                ]),
+                                const Text(
+                                  '리뷰',
+                                ),
                               ]),
                             ))
                       ]),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0,0,20,20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            FloatingActionButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AddReview.routeName,
+                                    arguments: Store_id(
+                                        data['store_id']
+                                    ),
+                                  );
+                                },
+                                child: const Icon(Icons.edit,),
+                              backgroundColor: const Color(0xffc0e2af),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   );
                 }).toList(),
