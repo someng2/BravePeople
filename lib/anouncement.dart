@@ -10,7 +10,7 @@ class AnouncementPage extends StatefulWidget {
 
 class _AnouncementPageState extends State<AnouncementPage> {
 
-  int _value = 1;
+  //int _value = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -34,43 +34,72 @@ class _AnouncementPageState extends State<AnouncementPage> {
         ),
       ),
       body: SafeArea(
-        child: ListView(
-          children: <Widget> [
-            const SizedBox(height: 10),
-            Row(
-              children: <Widget> [
-                const SizedBox(width: 30),
-                DropdownButton(
-                    value: _value,
-                    items: [
-                      DropdownMenuItem(
-                        child: Text("2021 - 11 - 20 업데이트    ",
-                          style: TextStyle(
-                            fontSize: 25,
+        child: Column(
+            children: <Widget> [
+              ExpansionTile(
+                title: new Text('2021 - 11 - 28 업데이트',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.black
+                  ),
+                ),
+                initiallyExpanded: false,
+                backgroundColor: Colors.white,
+                children: <Widget>[
+                  Divider(height: 3,color: Colors.grey,),
+                  Container(
+                    height: 50,
+                    width: 300,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      child: Row(
+                        children: [
+                          Text('제휴점 추가',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
                           ),
-                        ),
-                        value: 1,
+                        ],
                       ),
-                      DropdownMenuItem(
-                        child: Text("아직 이 부분은"),
-                        value: 2,
-                      ),
-                      DropdownMenuItem(
-                          child: Text("어떤 방식으로 구현하는지"),
-                          value: 3
-                      ),
-                      DropdownMenuItem(
-                          child: Text("정확히는 모르겠습니다."),
-                          value: 4
-                      )
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        _value = value as int;
-                      });
-                    }),
-              ],
+                    ),
+                  ),
+                  //Divider(height: 3,color: Colors.grey,),
+                ]
             ),
+              ExpansionTile(
+                  title: new Text('2021 - 11 - 20 업데이트',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black
+                    ),
+                  ),
+                  initiallyExpanded: false,
+                  backgroundColor: Colors.white,
+                  children: <Widget>[
+                    Divider(height: 3,color: Colors.grey,),
+                    Container(
+                      height: 50,
+                      width: 300,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 0),
+                        child: Row(
+                          children: [
+                            Text('커뮤니티 추가',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    //Divider(height: 3,color: Colors.grey,),
+                  ]
+              ),
           ],
         ),
       ),
@@ -78,9 +107,9 @@ class _AnouncementPageState extends State<AnouncementPage> {
   }
 }
 
-class ListItem {
-  int value;
-  String name;
-
-  ListItem(this.value, this.name);
-}
+// class ListItem {
+//   int value;
+//   String name;
+//
+//   ListItem(this.value, this.name);
+// }

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'login.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class MorePage extends StatefulWidget {
   @override
@@ -9,8 +12,10 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -47,8 +52,11 @@ class _MorePageState extends State<MorePage> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    Text('NickName'),
-                    const SizedBox(width: 100),
+                    const SizedBox(width: 10),
+                    Text('${_auth.currentUser!.email}',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    const SizedBox(width: 10),
                     IconButton(
                       icon: const Icon(
                         Icons.arrow_forward_ios,
@@ -239,4 +247,5 @@ class _MorePageState extends State<MorePage> {
     );
   }
 }
+
 
