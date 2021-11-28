@@ -94,7 +94,6 @@ class _StoreDetailState extends State<StoreDetail> {
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.black,
                             elevation: 2,
-
                             bottom: const PreferredSize(
                               child: TabBar(
                                 labelColor: Colors.black,
@@ -140,6 +139,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                           ),
                                         ]),
                                     ]),
+
                                 // second tab bar view widget
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,36 +163,110 @@ class _StoreDetailState extends State<StoreDetail> {
                                       children: [
                                         const Text('* '),
                                         Flexible(
-                                          child: Text(data['detail'],
-                                              ),
+                                          child: Text(
+                                            data['detail'],
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ],
                                 ),
-                                const Text(
-                                  '리뷰',
-                                ),
+
+                                // third tab bar
+                                StreamBuilder<QuerySnapshot> (
+
+                                    stream: FirebaseFirestore.instance
+                                        .collection('review')
+                                        .where('store_id',
+                                            isEqualTo: args.store_id)
+                                        .snapshots(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasError) {
+                                        return Text('Something went wrong');
+                                      }
+
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Text("Loading");
+                                      }
+                                      return ListView(
+                                        children: snapshot.data!.docs
+                                            .map((DocumentSnapshot document) {
+                                          Map<String, dynamic> data = document
+                                              .data()! as Map<String, dynamic>;
+
+                                          return Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  ClipOval(
+                                                    child: Image.network('https://st4.depositphotos.com/1156795/20814/v/950/depositphotos_208142514-stock-illustration-profile-placeholder-image-gray-silhouette.jpg',
+                                                      width: 40,
+                                                      height: 40,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(data['nickname']),
+                                                      Row(
+                                                        children: [
+                                                          for(int i = 0; i < data['star']; i++)
+                                                            const Icon(Icons.star_outlined,
+                                                              color: Colors.yellow,
+                                                              size: 22,)
+                                                        ]
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10),
+                                              if (!data['noImage'])
+                                                Center(
+                                                  child: Container(
+                                                      width: 200,
+                                                      child: Image.network(
+                                                          data['imageUrl'],
+                                                          fit: BoxFit.contain)
+
+                                                  ),
+
+                                                ),
+                                              const SizedBox(height: 10),
+
+                                              Text(data['content'], style: TextStyle(fontSize: 17)),
+                                              const Divider(thickness: 2,),
+
+                                            ],
+                                          );
+                                        }).toList(),
+                                      );
+                                    }),
                               ]),
                             ))
                       ]),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0,0,20,20.0),
+                        padding: const EdgeInsets.fromLTRB(0, 0, 20, 20.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             FloatingActionButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    AddReview.routeName,
-                                    arguments: Store_id(
-                                        data['store_id']
-                                    ),
-                                  );
-                                },
-                                child: const Icon(Icons.edit,),
-                              backgroundColor: const Color(0xffc0e2af),
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AddReview.routeName,
+                                  arguments: Store_id(data['store_id']),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.edit,
+                                color: Color(0xff13740B),
+                              ),
+                              backgroundColor: const Color(0xffC0E2AF),
                             ),
                           ],
                         ),
