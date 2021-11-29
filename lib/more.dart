@@ -38,7 +38,7 @@ class _MorePageState extends State<MorePage> {
       body: SafeArea(
         child: ListView(
           children: <Widget> [
-            Divider(color: Color(0xffC0E2AF), thickness: 12.0),
+            Divider(color: Color(0xffC0E2AF).withOpacity(0.2), thickness: 10.0),
             Column(
               children: <Widget> [
                 const SizedBox(height: 30),
@@ -70,7 +70,7 @@ class _MorePageState extends State<MorePage> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                Divider(color: Color(0xffC0E2AF), thickness: 4.0),
+                Divider(color: Color(0xffC0E2AF).withOpacity(0.2), thickness: 10.0),
                 Row(
                   children: <Widget> [
                     const SizedBox(width: 40.0),
@@ -138,7 +138,8 @@ class _MorePageState extends State<MorePage> {
                     ),
                   ],
                 ),
-                Divider(color: Colors.grey, thickness: 2.0),
+                // Divider(color: Colors.grey, thickness: 2.0),
+                Divider(color: Color(0xffC0E2AF).withOpacity(0.2), thickness: 10.0),
                 const SizedBox(height: 10),
                 Row(
                   children: <Widget> [
