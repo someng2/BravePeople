@@ -17,6 +17,7 @@ import 'setting.dart';
 import 'store.dart';
 import 'store_detail.dart';
 import 'add_review.dart';
+import 'mypage.dart';
 
 class BraveApp extends StatelessWidget {
   BraveApp({Key? key}) : super(key: key);
@@ -37,6 +38,7 @@ class BraveApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/home': (context) => HomePage(),
         '/more': (context) => MorePage(),
+        '/mypage': (context) => MyPage(),
         '/service': (context) => ServicePage(),
         '/favorite': (context) => FavoritePage(),
         '/myReview': (context) => MyReviewPage(),

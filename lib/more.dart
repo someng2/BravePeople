@@ -28,12 +28,13 @@ class _MorePageState extends State<MorePage> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.grey,
+            color: Colors.black,
           ),
           onPressed: () {
             Navigator.pushNamed(context, '/home');
           },
         ),
+        elevation: 0,
       ),
       body: SafeArea(
         child: ListView(
@@ -64,13 +65,14 @@ class _MorePageState extends State<MorePage> {
                       ),
                       onPressed: () {
                         //mypage 정보 수정으로 가야함
-                        //Navigator.pushNamed(context, '/mypage');
+                        Navigator.pushNamed(context, '/mypage');
                       },
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
-                Divider(color: Color(0xffC0E2AF).withOpacity(0.2), thickness: 10.0),
+                Divider(color: Colors.grey, thickness: 1.0),
+                // Divider(color: Color(0xffC0E2AF).withOpacity(0.2), thickness: 10.0),
                 Row(
                   children: <Widget> [
                     const SizedBox(width: 40.0),
@@ -164,7 +166,7 @@ class _MorePageState extends State<MorePage> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                Divider(color: Colors.grey, thickness: 2.0),
+                Divider(color: Colors.grey, thickness: 1.0),
                 const SizedBox(height: 10),
                 Row(
                   children: <Widget> [
@@ -189,7 +191,7 @@ class _MorePageState extends State<MorePage> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                Divider(color: Colors.grey, thickness: 2.0),
+                Divider(color: Colors.grey, thickness: 1.0),
                 const SizedBox(height: 10),
                 Row(
                   children: <Widget> [
@@ -214,7 +216,7 @@ class _MorePageState extends State<MorePage> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                Divider(color: Colors.grey, thickness: 2.0),
+                Divider(color: Colors.grey, thickness: 1.0),
                 const SizedBox(height: 10),
                 Row(
                   children: <Widget> [
@@ -239,7 +241,7 @@ class _MorePageState extends State<MorePage> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                Divider(color: Colors.grey, thickness: 2.0),
+                Divider(color: Colors.grey, thickness: 1.0),
               ],
             ),
           ],
