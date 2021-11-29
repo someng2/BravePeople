@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hgu_21_2_mobileappdevelopment/store_detail.dart';
 
+import 'community.dart';
+import 'community_create.dart';
+import 'community_detail.dart';
+import 'community_main.dart';
 import 'home.dart';
 import 'login.dart';
 import 'more.dart';
@@ -16,13 +21,15 @@ import 'add_review.dart';
 class BraveApp extends StatelessWidget {
   BraveApp({Key? key}) : super(key: key);
 
+  final User? _auth = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Brave',
       home: HomePage(),
-      initialRoute: '/login',
+      initialRoute: _auth!.email == null ? '/login' : '/home',
+      //initialRoute: '/login',
       // onGenerateRoute: _getRoute,
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
@@ -37,6 +44,10 @@ class BraveApp extends StatelessWidget {
         '/settings': (context) => SettingPage(),
         '/store': (context) => Store(),
         '/storeDetail' : (context) => StoreDetail(),
+        '/community' : (context) => Community(),
+        '/communityMain' : (context) => CommunityMain(),
+        '/communityDetail' : (context) => CommunityDetail(),
+        '/communityCreate' : (context) => CommunityCreate(),
         AddReview.routeName: (context) => const AddReview(),
       },
     );
