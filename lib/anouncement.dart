@@ -10,8 +10,6 @@ class AnouncementPage extends StatefulWidget {
 
 class _AnouncementPageState extends State<AnouncementPage> {
 
-  //int _value = 1;
-
   @override
   Widget build(BuildContext context) {
 
