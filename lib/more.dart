@@ -160,7 +160,7 @@ class _MorePageState extends State<MorePage> {
                       ),
                       onPressed: () {
                         //어플 소개로 가야함
-                        //Navigator.pushNamed(context, '/mypage');
+                        Navigator.pushNamed(context, '/introduce');
                       },
                     ),
                   ],

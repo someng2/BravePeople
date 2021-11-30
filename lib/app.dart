@@ -18,6 +18,7 @@ import 'store.dart';
 import 'store_detail.dart';
 import 'add_review.dart';
 import 'mypage.dart';
+import 'introduce.dart';
 
 class BraveApp extends StatelessWidget {
   BraveApp({Key? key}) : super(key: key);
@@ -50,6 +51,7 @@ class BraveApp extends StatelessWidget {
         '/communityMain' : (context) => CommunityMain(),
         '/communityDetail' : (context) => CommunityDetail(),
         '/communityCreate' : (context) => CommunityCreate(),
+        '/introduce' : (context) => IntroducePage(),
         AddReview.routeName: (context) => const AddReview(),
       },
     );
