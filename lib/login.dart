@@ -82,18 +82,33 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             const SizedBox(height: 100.0),
-            Column(children: [
-              ElevatedButton(
-                  child: const Text('Google Sign in'),
+            SizedBox(
+              height: 60,
+              width: 40,
+              child: ElevatedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          // height: 60,
+                          child: Image.network(
+                              'https://cdn.icon-icons.com/icons2/2699/PNG/512/google_logo_icon_169090.png',
+                              width: 30,
+                              fit: BoxFit.contain)),
+                      const SizedBox(width: 15),
+                      const Text('Google Sign in',
+                          style: TextStyle(fontSize: 17, color: Colors.black)),
+                    ],
+                  ),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.deepOrange,
+                    primary: const Color(0xfff7b3c2).withOpacity(0.9),
                   ),
                   onPressed: () async {
                     signInWithGoogle();
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/home');
                   }),
-            ])
+            ),
           ],
         ),
       ),
