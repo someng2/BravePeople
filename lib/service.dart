@@ -23,57 +23,58 @@ class _ServicePageState extends State<ServicePage> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.grey,
+            color: Colors.black,
           ),
           onPressed: () {
             Navigator.pushNamed(context, '/more');
           },
         ),
+        elevation: 0,
       ),
       body: SafeArea(
         child: ListView(
           children: <Widget> [
-            Divider(color: Color(0xffC0E2AF), thickness: 12.0),
+            Divider(color: const Color(0xffC0E2AF).withOpacity(0.2), thickness: 10.0),
             Column(
               children: <Widget> [
                 const SizedBox(height: 30),
                 Row(
-                  children: <Widget> [
-                    const SizedBox(width: 20),
+                  children: const <Widget> [
+                    SizedBox(width: 20),
                     Text('문의 연락처',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 19,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 50),
                 Row(
-                  children: <Widget> [
-                    const SizedBox(width: 20),
+                  children: const <Widget> [
+                    SizedBox(width: 20),
                     Text('email: 21xxxxxx@handong.edu',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 40),
                 Row(
-                  children: <Widget> [
-                    const SizedBox(width: 20),
+                  children: const <Widget> [
+                    SizedBox(width: 20),
                     Text('phone: 010-xxxx-xxxx',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                       ),
                     ),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 35),
-            Divider(color: Colors.grey, thickness: 2.0),
+            const SizedBox(height: 50),
+            const Divider(color: Colors.grey, thickness: 1.0),
           ],
         ),
       ),

@@ -33,7 +33,7 @@ class IntroducePage extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 40),
             Image.asset('assets/heart.jpeg', height: 250,),
           ],
         ));
