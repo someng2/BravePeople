@@ -44,6 +44,7 @@ class _AnouncementPageState extends State<AnouncementPage> {
                     Navigator.pop(context);
                   },
                 ),
+                elevation: 0,
               ),
               body: ListView(
                   children:
@@ -53,6 +54,9 @@ class _AnouncementPageState extends State<AnouncementPage> {
                     return SafeArea(
                       child: Column(
                         children: <Widget> [
+                          Divider(
+                              color: const Color(0xffC0E2AF).withOpacity(0.2),
+                              thickness: 10.0),
                           ExpansionTile(
                               title: new Text(data['title'],
                                 style: TextStyle(
@@ -64,7 +68,7 @@ class _AnouncementPageState extends State<AnouncementPage> {
                               initiallyExpanded: false,
                               backgroundColor: Colors.white,
                               children: <Widget>[
-                                Divider(height: 3,color: Colors.grey,),
+                                //Divider(height: 3,color: Colors.grey,),
                                 Container(
                                   constraints: BoxConstraints(
                                     maxHeight: double.infinity,
@@ -77,7 +81,7 @@ class _AnouncementPageState extends State<AnouncementPage> {
                                         Text(data['message'],
                                           style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 20,
+                                            fontSize: 18,
                                           ),
                                         ),
                                       ],
