@@ -35,6 +35,7 @@ class _StoreState extends State<Store> {
                   indicatorColor: Color(0xffc0e2af),
                   //unselectedLabelColor: Color(0x00c0e2af),
                   labelColor: Colors.black,
+
                   tabs: [
                     Tab(
                       text: '한식',
@@ -51,10 +52,10 @@ class _StoreState extends State<Store> {
           body: TabBarView(
             children: [
               _buildTabBarView('한식'),
-              _buildTabBarView('양식'),
-              _buildTabBarView('중식'),
-              _buildTabBarView('일식'),
-              _buildTabBarView('분식'),
+              _buildTabBarView('한식'),
+              _buildTabBarView('한식'),
+              _buildTabBarView('한식'),
+              _buildTabBarView('한식'),
               _buildTabBarView('카페'),
             ],
           ),
@@ -99,17 +100,14 @@ Widget _buildTabBarView(String category) {
                           Text(
                             data['menu'][0],
                             style: const TextStyle(fontSize: 11),
-                            // softWrap: true,
                           ),
                           const Text(
                             ', ',
                             style: TextStyle(fontSize: 11),
-                            // softWrap: true,
                           ),
                           Text(
                             data['menu'][1],
                             style: const TextStyle(fontSize: 11),
-                            // softWrap: true,
                           ),
                         ],
                       ),

@@ -72,9 +72,7 @@ class _StoreDetailState extends State<StoreDetail> {
                             SizedBox(width: 110),
                             IconButton(
                                 icon: Icon(Icons.favorite_border),
-                                onPressed: () {
-                                  // 찜 목록에 제휴점 추가
-                                }),
+                                onPressed: () {}),
                           ],
                         ),
                         const Divider(

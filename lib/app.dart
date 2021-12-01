@@ -8,7 +8,6 @@ import 'community_detail.dart';
 import 'community_main.dart';
 import 'home.dart';
 import 'login.dart';
-import 'more.dart';
 import 'service.dart';
 import 'favorite.dart';
 import 'myReview.dart';
@@ -17,9 +16,6 @@ import 'setting.dart';
 import 'store.dart';
 import 'store_detail.dart';
 import 'add_review.dart';
-import 'mypage.dart';
-import 'introduce.dart';
-import 'coupon.dart';
 
 class BraveApp extends StatelessWidget {
   BraveApp({Key? key}) : super(key: key);
@@ -39,8 +35,6 @@ class BraveApp extends StatelessWidget {
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/login': (context) => LoginPage(),
         '/home': (context) => HomePage(),
-        '/more': (context) => MorePage(),
-        '/mypage': (context) => const MyPage(),
         '/service': (context) => ServicePage(),
         '/favorite': (context) => FavoritePage(),
         '/myReview': (context) => MyReviewPage(),
@@ -52,8 +46,6 @@ class BraveApp extends StatelessWidget {
         '/communityMain' : (context) => const CommunityMain(),
         '/communityDetail' : (context) => const CommunityDetail(),
         '/communityCreate' : (context) => CommunityCreate(),
-        '/introduce' : (context) => const IntroducePage(),
-        '/coupon' : (context) => const CouponPage(),
         AddReview.routeName: (context) => const AddReview(),
       },
       debugShowCheckedModeBanner: false,
