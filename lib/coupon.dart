@@ -57,9 +57,12 @@ class _CouponPageState extends State<CouponPage> {
                             height: 50,
                             width: 100,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.yellow, width: 3),
+                              border:
+                                  Border.all(color: Colors.yellow, width: 4),
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(5.0,)),
+                                  const BorderRadius.all(Radius.circular(
+                                5.0,
+                              )),
                             ),
                             child: IconButton(
                                 onPressed: () {
@@ -149,6 +152,96 @@ class _CouponPageState extends State<CouponPage> {
                         style: TextStyle(color: Color(0xff8C8B8B)),
                       ),
                     ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 90,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                    child: (data['coupon'] < 1)
+                                        ? const SizedBox(height: 30)
+                                        : Image.asset('assets/earth_smile.png',
+                                            fit: BoxFit.contain),
+                                    flex: 1),
+                                Expanded(
+                                    child: (data['coupon'] < 2)
+                                        ? const SizedBox(height: 30)
+                                        : Image.asset('assets/earth_smile.png',
+                                            fit: BoxFit.contain),
+                                    flex: 1),
+                                Expanded(
+                                    child: (data['coupon'] < 3)
+                                        ? const SizedBox(height: 30)
+                                        : Image.asset('assets/earth_smile.png',
+                                            fit: BoxFit.contain),
+                                    flex: 1),
+                              ]),
+                        ),
+                        const Divider(color: Colors.grey),
+                        SizedBox(
+                          height: 90,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                    child: (data['coupon'] < 4)
+                                        ? const SizedBox(height: 30)
+                                        : Image.asset('assets/earth_smile.png',
+                                        fit: BoxFit.contain),
+                                    flex: 1),
+                                Expanded(
+                                    child: (data['coupon'] < 5)
+                                        ? const SizedBox(height: 30)
+                                        : Image.asset('assets/earth_smile.png',
+                                        fit: BoxFit.contain),
+                                    flex: 1),
+                                Expanded(
+                                    child: (data['coupon'] < 6)
+                                        ? const SizedBox(height: 30)
+                                        : Image.asset('assets/earth_smile.png',
+                                        fit: BoxFit.contain),
+                                    flex: 1),
+                              ]),
+                        ),
+                        const Divider(color: Colors.grey),
+                        SizedBox(
+                          height: 90,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                    child: (data['coupon'] < 7)
+                                        ? const SizedBox(height: 30)
+                                        : Image.asset('assets/earth_smile.png',
+                                        fit: BoxFit.contain),
+                                    flex: 1),
+                                Expanded(
+                                    child: (data['coupon'] < 8)
+                                        ? const SizedBox(height: 30)
+                                        : Image.asset('assets/earth_smile.png',
+                                        fit: BoxFit.contain),
+                                    flex: 1),
+                                Expanded(
+                                    child:
+                                        Column(
+                                          children: [
+                                            Image.asset('assets/gift.png',
+                                            height: 67),
+                                            const Text('10% 할인권', style: TextStyle(fontSize: 16))
+                                          ],
+                                        ),
+                                    flex: 1),
+                              ]),
+                        ),
+                        const Divider(color: Colors.grey),
+                      ],
+                    )
                   ]);
                 }).toList(),
               ));
@@ -190,6 +283,5 @@ class _CouponPageState extends State<CouponPage> {
             ],
           );
         });
-
   }
 }
