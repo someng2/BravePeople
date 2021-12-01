@@ -23,12 +23,13 @@ class _FavoritePageState extends State<FavoritePage> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.grey,
+            color: Colors.black,
           ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
+        elevation: 0,
       ),
       body: SafeArea(
         child: ListView(

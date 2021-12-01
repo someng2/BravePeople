@@ -74,7 +74,7 @@ class _MyPageState extends State<MyPage> {
 
                 return Column(
                   children: [
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     ClipOval(
                       child: Image.network(
                         'https://st4.depositphotos.com/1156795/20814/v/950/depositphotos_208142514-stock-illustration-profile-placeholder-image-gray-silhouette.jpg',
@@ -105,11 +105,11 @@ class _MyPageState extends State<MyPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 30),
                     Divider(
                         color: const Color(0xffC0E2AF).withOpacity(0.2),
                         thickness: 10.0),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Row(
@@ -123,7 +123,7 @@ class _MyPageState extends State<MyPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Row(
@@ -136,6 +136,7 @@ class _MyPageState extends State<MyPage> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 10),
                     SizedBox(
                       width: 200,
                       height: 35,
