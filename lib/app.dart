@@ -19,6 +19,7 @@ import 'store_detail.dart';
 import 'add_review.dart';
 import 'mypage.dart';
 import 'introduce.dart';
+import 'coupon.dart';
 
 class BraveApp extends StatelessWidget {
   BraveApp({Key? key}) : super(key: key);
@@ -39,19 +40,20 @@ class BraveApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/home': (context) => HomePage(),
         '/more': (context) => MorePage(),
-        '/mypage': (context) => MyPage(),
+        '/mypage': (context) => const MyPage(),
         '/service': (context) => ServicePage(),
         '/favorite': (context) => FavoritePage(),
         '/myReview': (context) => MyReviewPage(),
         '/anouncement': (context) => AnouncementPage(),
         '/settings': (context) => SettingPage(),
-        '/store': (context) => Store(),
-        '/storeDetail' : (context) => StoreDetail(),
-        '/community' : (context) => Community(),
-        '/communityMain' : (context) => CommunityMain(),
-        '/communityDetail' : (context) => CommunityDetail(),
+        '/store': (context) => const Store(),
+        '/storeDetail' : (context) => const StoreDetail(),
+        '/community' : (context) => const Community(),
+        '/communityMain' : (context) => const CommunityMain(),
+        '/communityDetail' : (context) => const CommunityDetail(),
         '/communityCreate' : (context) => CommunityCreate(),
-        '/introduce' : (context) => IntroducePage(),
+        '/introduce' : (context) => const IntroducePage(),
+        '/coupon' : (context) => const CouponPage(),
         AddReview.routeName: (context) => const AddReview(),
       },
     );
