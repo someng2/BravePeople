@@ -44,3 +44,4 @@ flutter:
   assets:
 #    - assets/earth.jpeg
     - assets/heart.jpeg
+    - assets/barcode.jpeg

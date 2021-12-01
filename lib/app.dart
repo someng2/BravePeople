@@ -56,6 +56,7 @@ class BraveApp extends StatelessWidget {
         '/coupon' : (context) => const CouponPage(),
         AddReview.routeName: (context) => const AddReview(),
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 

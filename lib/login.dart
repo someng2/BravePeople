@@ -37,7 +37,8 @@ Future<UserCredential> signInWithGoogle() async {
       'nickname': 'echomong',
       'store_id': '',
       'phone': '',
-      'discount': '',
+      'discount': 0,
+      'coupon': 0,
     });
   }
 
