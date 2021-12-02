@@ -17,25 +17,81 @@ class Store extends StatefulWidget {
 }
 
 class _StoreState extends State<Store> {
+  final List<String> valueList = ['북구・남구', '북구', '남구'];
+  String dropdownValue = '북구・남구';
+
+  bool total = true;
+  bool Bukgu = true;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 6,
         child: Scaffold(
           appBar: AppBar(
-            toolbarHeight: 80,
+            toolbarHeight: 55,
             backgroundColor: Colors.white,
             iconTheme: const IconThemeData(
               color: Colors.black,
             ),
             // foregroundColor: Colors.black,
+            actions: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.0),
+                  border: Border.all(
+                      color: const Color(0xffc0e2af),
+                      style: BorderStyle.solid,
+                      width: 4),
+                ),
+                height: 10,
+                width: 105,
+                // alignment: Alignment.center,
+                margin: EdgeInsets.all(3),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_downward),
+                      iconSize: 20,
+                      style: const TextStyle(color: Colors.black),
+                      alignment: Alignment.center,
+                      underline: Container(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownValue = newValue!;
+                          if (dropdownValue == '북구・남구') {
+                            total = true;
+                          } else {
+                            total = false;
+                            if (dropdownValue == '남구') {
+                              Bukgu = false;
+                            } else {
+                              Bukgu = true;
+                            }
+                          }
+                        });
+                      },
+                      items: <String>['북구・남구', '북구', '남구']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Center(child: Text(value)),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              )
+            ],
             bottom: const PreferredSize(
               child: TabBar(
                   isScrollable: true,
                   indicatorColor: Color(0xffc0e2af),
                   //unselectedLabelColor: Color(0x00c0e2af),
                   labelColor: Colors.black,
-
                   tabs: [
                     Tab(
                       text: '한식',
@@ -51,24 +107,30 @@ class _StoreState extends State<Store> {
           ),
           body: TabBarView(
             children: [
-              _buildTabBarView('한식'),
-              _buildTabBarView('양식'),
-              _buildTabBarView('중식'),
-              _buildTabBarView('일식'),
-              _buildTabBarView('분식'),
-              _buildTabBarView('카페'),
+              _buildTabBarView('한식', Bukgu, total),
+              _buildTabBarView('양식', Bukgu, total),
+              _buildTabBarView('중식', Bukgu, total),
+              _buildTabBarView('일식', Bukgu, total),
+              _buildTabBarView('분식', Bukgu, total),
+              _buildTabBarView('카페', Bukgu, total),
             ],
           ),
         ));
   }
 }
 
-Widget _buildTabBarView(String category) {
+Widget _buildTabBarView(String category, bool Bukgu, bool total) {
   return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('store')
-          .where('category', isEqualTo: category)
-          .snapshots(),
+      stream: total
+          ? (FirebaseFirestore.instance
+              .collection('store')
+              .where('category', isEqualTo: category)
+              .snapshots())
+          : (FirebaseFirestore.instance
+              .collection('store')
+              .where('category', isEqualTo: category)
+              .where('address_gu', isEqualTo: (Bukgu ? '북구' : '남구'))
+              .snapshots()),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
