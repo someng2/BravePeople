@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                         icon: Icon(Icons.wallet_giftcard, size: 60, color: Colors.lightBlueAccent),
                         onPressed: () {
                           //쿠폰으로 가야함
-                          //Navigator.pushNamed(context, '/login');
+                          Navigator.pushNamed(context, '/coupon');
                         },
                       ),
                       const SizedBox(height: 20.0),

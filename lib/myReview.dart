@@ -23,17 +23,19 @@ class _MyReviewPageState extends State<MyReviewPage> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.grey,
+            color: Colors.black,
           ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
+        elevation: 0,
       ),
       body: SafeArea(
         child: ListView(
           children: <Widget> [
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
+            Divider(color: Color(0xffC0E2AF).withOpacity(0.2), thickness: 10.0),
             Row(
               children: <Widget> [
                 const SizedBox(width: 30),

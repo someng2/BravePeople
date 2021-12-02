@@ -58,9 +58,7 @@ class _CommunityState extends State<Community> {
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
-                String time = DateTime.now().millisecondsSinceEpoch.toString();
-                //DateTime createdDate = DateTime.parse(data["created"].toDate());
-                //String createdDateString = DateFormat.yMMMd('en_US').format(createdDate);
+                int comment_l = data["comment"].length - 1;
                 return Card(
                   child: Container(
                     padding: EdgeInsets.all(10),
@@ -81,26 +79,30 @@ class _CommunityState extends State<Community> {
                               ),
                               const SizedBox(height: 20),
                               Row(children: [
-                                Text(time),
-                                const SizedBox(width: 100),
+                                Text(data["created"]),
+                                const SizedBox(width: 60),
                                 Icon(
                                   Icons.thumb_up,
                                   color: Colors.red,
                                 ),
-                                //Text(data["like"]),
-                                const SizedBox(width: 30),
+                                const SizedBox(width: 8),
+                                Text(data["like"]),
+                                const SizedBox(width: 20),
                                 Icon(
                                   Icons.message,
                                   color: Colors.blue,
                                 ),
-                                //Text(data["comment"]),
+                                const SizedBox(width: 8),
+                                Text('$comment_l'),
                               ])
                             ]),
                         const SizedBox(width: 10),
                         IconButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, CommunityDetail.routeName,
-                                arguments: Community_id(data['commmunity_id']),);
+                              Navigator.pushNamed(
+                                context,
+                                CommunityDetail.routeName,
+                                arguments: Community_id(data['community_id']),);
                             },
                             icon: const Icon(Icons.navigate_next)),
                       ],
@@ -112,7 +114,7 @@ class _CommunityState extends State<Community> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, 'communityCreate');
+          Navigator.pushNamed(context, '/communityCreate');
         },
         child: const Icon(Icons.border_color),
         backgroundColor: Colors.green,
