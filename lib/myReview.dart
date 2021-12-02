@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hgu_21_2_mobileappdevelopment/store.dart';
+import 'package:hgu_21_2_mobileappdevelopment/store_detail.dart';
 
 class MyReviewPage extends StatefulWidget {
   @override
@@ -9,60 +11,102 @@ class MyReviewPage extends StatefulWidget {
 }
 
 class _MyReviewPageState extends State<MyReviewPage> {
+
+  String nickname = '';
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('나의 리뷰',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: ListView(
-          children: <Widget> [
-            SizedBox(height: 10),
-            Divider(color: Color(0xffC0E2AF).withOpacity(0.2), thickness: 10.0),
-            Row(
-              children: <Widget> [
-                const SizedBox(width: 30),
-                Text(
-                  '가게 이름',
+
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('review')
+            .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text("Loading");
+          }
+          return Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: const Text('나의 리뷰',
                   style: TextStyle(
-                    fontSize: 20,
+                    color: Colors.black,
                   ),
                 ),
-                const SizedBox(width: 190),
-                IconButton(
+                backgroundColor: Colors.white,
+                leading: IconButton(
                   icon: const Icon(
-                    Icons.arrow_forward_ios,
+                    Icons.arrow_back,
                     color: Colors.grey,
                   ),
                   onPressed: () {
-                    //해당리뷰로 가도록
-                    //Navigator.pushNamed(context, '/mypage');
+                    Navigator.pop(context);
                   },
                 ),
-              ],
-            ),
-
-          ],
-        ),
-      ),
-    );
+              ),
+              body: ListView(
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+                  return Column(
+                    children: [
+                      ListTile(
+                        leading: ConstrainedBox(
+                            constraints: BoxConstraints(
+                                minWidth: 80, minHeight: 100),
+                            child: data['noImage'] ? Image.network(
+                              data['store_image'],
+                              width: 80,
+                              height: 80,
+                            )
+                            : ClipOval(
+                              child: Image.network('https://st4.depositphotos.com/1156795/20814/v/950/depositphotos_208142514-stock-illustration-profile-placeholder-image-gray-silhouette.jpg',
+                              width: 80,
+                              height: 100,
+                              fit: BoxFit.cover,
+                              ),
+                            )),
+                        title: Text(data['store_name']),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              data['content'],
+                              style: const TextStyle(fontSize: 11),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                                children: [
+                                  for(int i = 0; i < data['star']; i++)
+                                    const Icon(Icons.star_outlined,
+                                      color: Colors.yellow,
+                                      size: 22,)
+                                ]
+                            )
+                          ],
+                        ),
+                        trailing: IconButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                StoreDetail.routeName,
+                                arguments: Store_id(data['store_id']),
+                              );
+                            },
+                            icon: const Icon(Icons.navigate_next)),
+                      ),
+                      const Divider(),
+                    ],
+                  );
+                }).toList(),
+              )
+          );
+        });
   }
 }
-
