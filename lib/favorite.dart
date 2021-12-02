@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hgu_21_2_mobileappdevelopment/store.dart';
+import 'package:hgu_21_2_mobileappdevelopment/store_detail.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -9,59 +11,96 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('내가 찜한 가게',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: ListView(
-          children: <Widget> [
-            const SizedBox(height: 10),
-            Row(
-              children: <Widget> [
-                const SizedBox(width: 30),
-                Text(
-                  '찜한 가게',
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('store')
+            .where('client', arrayContains: FirebaseAuth.instance.currentUser!.email)
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text("Loading");
+          }
+          return Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: const Text('내가 찜한 가게',
                   style: TextStyle(
-                    fontSize: 20,
+                    color: Colors.black,
                   ),
                 ),
-                const SizedBox(width: 190),
-                IconButton(
+                backgroundColor: Colors.white,
+                leading: IconButton(
                   icon: const Icon(
-                    Icons.arrow_forward_ios,
+                    Icons.arrow_back,
                     color: Colors.grey,
                   ),
                   onPressed: () {
-                    //가게 상세로 가도록
-                    //Navigator.pushNamed(context, '/mypage');
+                    Navigator.pop(context);
                   },
                 ),
-              ],
-            ),
-
-          ],
-        ),
-      ),
-    );
+              ),
+              body: ListView(
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+                  return Column(
+                    children: [
+                      ListTile(
+                        leading: ConstrainedBox(
+                            constraints: BoxConstraints(
+                                minWidth: 80, minHeight: 100),
+                            child: Image.network(
+                              data['image'],
+                              width: 80,
+                              height: 100,
+                            )),
+                        title: Text(data['name']),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  data['menu'][0],
+                                  style: const TextStyle(fontSize: 11),
+                                ),
+                                const Text(
+                                  ', ',
+                                  style: TextStyle(fontSize: 11),
+                                ),
+                                Text(
+                                  data['menu'][1],
+                                  style: const TextStyle(fontSize: 11),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Text(data['business_time']),
+                          ],
+                        ),
+                        trailing: IconButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                StoreDetail.routeName,
+                                arguments: Store_id(data['store_id']),
+                              );
+                            },
+                            icon: const Icon(Icons.navigate_next)),
+                      ),
+                      const Divider(),
+                    ],
+                  );
+                }).toList(),
+              )
+          );
+        });
   }
 }
-
