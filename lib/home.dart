@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const SizedBox(width: 80.0),
-                    Text('용기내는 사람들',
+                    const Text('용기내는 사람들',
                       style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,

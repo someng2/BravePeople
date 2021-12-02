@@ -14,17 +14,14 @@ class _CommunityCreateState extends State<CommunityCreate> {
   TextEditingController addressController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
-  String time = DateTime.now().millisecondsSinceEpoch.toString();
 
   String address = "";
   String title = "";
   String content = "";
-  String id = FirebaseFirestore.instance.collection('products').snapshots().length.toString();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : false,
       appBar: AppBar(
         title: const Text(
           '글 작성',
@@ -109,43 +106,31 @@ class _CommunityCreateState extends State<CommunityCreate> {
                 ),
                 const SizedBox(height: 25.0),
                 Text("내용"),
-                SizedBox(
-                  height: 200,
-                  width: 400,
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Color(0xffDBEE91),
-                      borderRadius: const BorderRadius.all(
-                          const Radius.circular(8)),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0xffDBEE91),
-                        contentPadding: const EdgeInsets.only(
-                            left: 14.0, bottom: 8.0, top: 8.0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xffDBEE91),
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xffDBEE91),
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xffDBEE91),
+                    contentPadding: const EdgeInsets.only(
+                        left: 14.0, bottom: 8.0, top: 8.0),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0xffDBEE91),
                       ),
-                      controller: contentController,
-                      onChanged: (value) {
-                        setState(() {
-                          content = value;
-                        });
-                      },
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0xffDBEE91),
+                      ),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
+                  controller: contentController,
+                  onChanged: (value) {
+                    setState(() {
+                      content = value;
+                    });
+                  },
                 ),
                 const SizedBox(height: 25.0),
                 Text("사진"),
@@ -183,8 +168,7 @@ class _CommunityCreateState extends State<CommunityCreate> {
                   "title": title,
                   "content": content,
                   "address": address,
-                  "created": time,
-                  "community_id": id,
+                  "created": Timestamp.now(),
                 });
               },
               style: ElevatedButton.styleFrom(

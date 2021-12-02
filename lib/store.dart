@@ -123,14 +123,14 @@ Widget _buildTabBarView(String category, bool Bukgu, bool total) {
   return StreamBuilder<QuerySnapshot>(
       stream: total
           ? (FirebaseFirestore.instance
-              .collection('store')
-              .where('category', isEqualTo: category)
-              .snapshots())
+          .collection('store')
+          .where('category', isEqualTo: category)
+          .snapshots())
           : (FirebaseFirestore.instance
-              .collection('store')
-              .where('category', isEqualTo: category)
-              .where('address_gu', isEqualTo: (Bukgu ? '북구' : '남구'))
-              .snapshots()),
+          .collection('store')
+          .where('category', isEqualTo: category)
+          .where('address_gu', isEqualTo: (Bukgu ? '북구' : '남구'))
+          .snapshots()),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
@@ -142,7 +142,7 @@ Widget _buildTabBarView(String category, bool Bukgu, bool total) {
         return ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
-                document.data()! as Map<String, dynamic>;
+            document.data()! as Map<String, dynamic>;
             return Column(
               children: [
                 ListTile(

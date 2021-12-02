@@ -32,10 +32,14 @@ class _AnouncementPageState extends State<AnouncementPage> {
             Navigator.pop(context);
           },
         ),
+        elevation: 0,
       ),
       body: SafeArea(
         child: Column(
             children: <Widget> [
+              Divider(
+                  color: const Color(0xffC0E2AF).withOpacity(0.2),
+                  thickness: 10.0),
               ExpansionTile(
                 title: new Text('2021 - 11 - 28 업데이트',
                   style: TextStyle(
@@ -47,18 +51,18 @@ class _AnouncementPageState extends State<AnouncementPage> {
                 initiallyExpanded: false,
                 backgroundColor: Colors.white,
                 children: <Widget>[
-                  Divider(height: 3,color: Colors.grey,),
+                  // Divider(thickness: 0.3,color: Colors.grey,),
                   Container(
                     height: 50,
                     width: 300,
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 0),
                       child: Row(
-                        children: [
+                        children: const [
                           Text('제휴점 추가',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 20,
+                              fontSize: 18,
                             ),
                           ),
                         ],
@@ -69,7 +73,7 @@ class _AnouncementPageState extends State<AnouncementPage> {
                 ]
             ),
               ExpansionTile(
-                  title: new Text('2021 - 11 - 20 업데이트',
+                  title: const Text('2021 - 11 - 20 업데이트',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -79,18 +83,18 @@ class _AnouncementPageState extends State<AnouncementPage> {
                   initiallyExpanded: false,
                   backgroundColor: Colors.white,
                   children: <Widget>[
-                    Divider(height: 3,color: Colors.grey,),
+                    // Divider(thickness: 0.3,color: Colors.grey,),
                     Container(
                       height: 50,
                       width: 300,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 0),
                         child: Row(
-                          children: [
+                          children: const [
                             Text('커뮤니티 추가',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 20,
+                                fontSize: 18,
                               ),
                             ),
                           ],
