@@ -52,10 +52,10 @@ class _StoreState extends State<Store> {
           body: TabBarView(
             children: [
               _buildTabBarView('한식'),
-              _buildTabBarView('한식'),
-              _buildTabBarView('한식'),
-              _buildTabBarView('한식'),
-              _buildTabBarView('한식'),
+              _buildTabBarView('양식'),
+              _buildTabBarView('중식'),
+              _buildTabBarView('일식'),
+              _buildTabBarView('분식'),
               _buildTabBarView('카페'),
             ],
           ),
