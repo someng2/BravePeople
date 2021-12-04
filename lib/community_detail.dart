@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'community.dart';
 
@@ -19,7 +20,7 @@ class _CommunityDetailState extends State<CommunityDetail> {
     final args = ModalRoute.of(context)!.settings.arguments as Community_id;
 
     TextEditingController commentController = TextEditingController();
-    String time = DateTime.now().millisecondsSinceEpoch.toString();
+    String created = DateFormat('yyyy-MM-dd - HH:mm').format(DateTime.now());
 
     String write = "";
 
@@ -58,6 +59,8 @@ class _CommunityDetailState extends State<CommunityDetail> {
                 List<dynamic> comment = data['comment'];
                 List<dynamic> comment_nickname = data['comment_nickname'];
                 List<dynamic> comment_time = data['comment_time'];
+
+                int comment_length = data['comment'].length;
 
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,7 +107,7 @@ class _CommunityDetailState extends State<CommunityDetail> {
                             margin: EdgeInsets.all(10),
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Color(0xffDBEE91),
+                              color: Color(0xffC0E2AF).withOpacity(0.5),
                               borderRadius: const BorderRadius.all(
                                   const Radius.circular(8)),
                             ),
@@ -129,13 +132,13 @@ class _CommunityDetailState extends State<CommunityDetail> {
                               child: TextField(
                                 decoration: InputDecoration(
                                   filled: true,
-                                  fillColor: Color(0xffDBEE91),
+                                  fillColor: Color(0xffDBEE91).withOpacity(0.3),
                                   hintText: ('댓글을 작성하세요'),
                                   contentPadding: const EdgeInsets.only(
                                       left: 14.0, bottom: 8.0, top: 8.0),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0xffDBEE91),
+                                      color: Color(0xffDBEE91).withOpacity(0.7),
                                     ),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -162,34 +165,40 @@ class _CommunityDetailState extends State<CommunityDetail> {
                                     .doc()
                                     .set({
                                   "comment": write,
-                                  "comment_time": time,
+                                  "comment_time": created,
                                 });
                               },
                               color: Color(0xffC0E2AF),
                             ),
                           ]),
-                      SizedBox(
-                        height: 100,
-                        width: 400,
-                        child: Container(
-                            margin: EdgeInsets.all(10),
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Color(0xffDBEE91),
-                              borderRadius: const BorderRadius.all(
-                                  const Radius.circular(8)),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(comment_nickname[0],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold)),
-                                Text(comment[0]),
-                                Text(comment_time[0]),
-                              ],
-                            )),
-                      ),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (int i = 0; i < comment_length; i++)
+                              SizedBox(
+                                height: 100,
+                                width: 400,
+                                child: Container(
+                                    margin: EdgeInsets.all(10),
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffDBEE91).withOpacity(0.6),
+                                      borderRadius: const BorderRadius.all(
+                                          const Radius.circular(8)),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(comment_nickname[i],
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text(comment[i]),
+                                        Text(comment_time[i]),
+                                      ],
+                                    )),
+                              ),
+                          ]),
                     ]);
               }).toList(),
             ),
