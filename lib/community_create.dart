@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +27,9 @@ class _CommunityCreateState extends State<CommunityCreate> {
   final List<String> comment_nickname = [];
   final List<String> comment_time = [];
   final String like = '0';
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
 
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
