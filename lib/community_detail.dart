@@ -44,7 +44,7 @@ class _CommunityDetailState extends State<CommunityDetail> {
               leading: IconButton(
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Colors.grey,
+                  color: Colors.black,
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -67,9 +67,9 @@ class _CommunityDetailState extends State<CommunityDetail> {
                     children: [
                       Container(
                           margin: EdgeInsets.all(10),
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Colors.yellow.withOpacity(0.2),
                           ),
                           child: Row(
                             children: [
@@ -118,7 +118,7 @@ class _CommunityDetailState extends State<CommunityDetail> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('제목: ' + data['title'],
+                                Text('<' + data['title'] + '>',
                                     style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold)),

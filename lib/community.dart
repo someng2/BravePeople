@@ -36,7 +36,7 @@ class _CommunityState extends State<Community> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.grey,
+            color: Colors.black,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -54,70 +54,81 @@ class _CommunityState extends State<Community> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Text("Loading");
             }
-            return ListView(
-              children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                Map<String, dynamic> data =
-                    document.data()! as Map<String, dynamic>;
-                int comment_l = data["comment"].length;
-                return Card(
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Color(0xffDBEE91).withOpacity(0.5),
-                      border: Border.all(width: 10, color: Color(0xffC0E2AF).withOpacity(0.2)),
-                      borderRadius:
-                          const BorderRadius.all(const Radius.circular(8)),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data["title"],
-                                  style: const TextStyle(fontSize: 15),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  data["content"],
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                const SizedBox(height: 20),
-                                Row(children: [
-                                  Text(data["created"]),
-                                  const SizedBox(width: 60),
-                                  Icon(
-                                    Icons.thumb_up,
-                                    color: Colors.red,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(data["like"]),
-                                  const SizedBox(width: 20),
-                                  Icon(
-                                    Icons.message,
-                                    color: Colors.blue,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text('$comment_l'),
-                                ])
-                              ]),
+            return Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xffC0E2AF).withOpacity(0.2),
+                ),
+                // width: 380,
+                margin: const EdgeInsets.fromLTRB(7, 40, 7, 20),
+                padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                child: ListView(
+                  children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                    Map<String, dynamic> data =
+                        document.data()! as Map<String, dynamic>;
+                    int comment_l = data["comment"].length;
+                    return Card(
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        // margin: EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Color(0xffDBEE91).withOpacity(0.5),
+                          // border: Border.all(width: 10, color: Color(0xffC0E2AF).withOpacity(0.2)),
+                          // borderRadius:
+                          //     const BorderRadius.all(const Radius.circular(8)),
                         ),
-                        const SizedBox(width: 20),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                CommunityDetail.routeName,
-                                arguments: Community_id(data['community_id']),);
-                            },
-                            icon: const Icon(Icons.navigate_next)),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      data["title"],
+                                      style: const TextStyle(fontSize: 15),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      data["content"],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Row(children: [
+                                      Text(data["created"]),
+                                      const SizedBox(width: 60),
+                                      Icon(
+                                        Icons.thumb_up,
+                                        color: Colors.red,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(data["like"]),
+                                      const SizedBox(width: 20),
+                                      Icon(
+                                        Icons.message,
+                                        color: Colors.blue,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text('$comment_l'),
+                                    ])
+                                  ]),
+                            ),
+                            const SizedBox(width: 20),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    CommunityDetail.routeName,
+                                    arguments: Community_id(data['community_id']),);
+                                },
+                                icon: const Icon(Icons.navigate_next)),
+                          ],
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
             );
           }),
       floatingActionButton: FloatingActionButton(
