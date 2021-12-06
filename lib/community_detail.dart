@@ -77,20 +77,24 @@ class _CommunityDetailState extends State<CommunityDetail> {
                                 Icons.person,
                                 size: 50,
                               ),
-                              Column(
-                                children: [
-                                  Text(data['nickname'],
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Text(data['address']),
-                                  const SizedBox(width: 30),
-                                  Text(data['created']),
-                                ],
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(data['nickname'],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text(data['address']),
+                                    const SizedBox(width: 30),
+                                    Text(data['created']),
+                                  ],
+                                ),
                               ),
                               const SizedBox(width: 80),
                               Icon(
                                 Icons.thumb_up,
-                                size: 50,
+                                size: 40,
                                 color: Colors.red,
                               ),
                               const SizedBox(width: 20),
