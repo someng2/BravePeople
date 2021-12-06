@@ -19,12 +19,45 @@ class Store extends StatefulWidget {
 class _StoreState extends State<Store> {
   final List<String> valueList = ['북구・남구', '북구', '남구'];
   String dropdownValue = '북구・남구';
+  final TextEditingController _filter = TextEditingController();
+  Icon _searchIcon = const Icon(Icons.search);
+  Widget _appBarTitle = Text('Search Example');
+  List filteredNames = [];
+  List names = [];
+  String _searchText = "";
 
   bool total = true;
   bool Bukgu = true;
+  bool searching = false;
+
+  _StoreState() {
+    _filter.addListener(() {
+      if (_filter.text.isEmpty) {
+        setState(() {
+          _searchText = "";
+          filteredNames = names;
+        });
+      } else {
+        setState(() {
+          _searchText = _filter.text;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (!(_searchText.isEmpty)) {
+      List tempList = [];
+      for (int i = 0; i < filteredNames.length; i++) {
+        if (filteredNames[i]['name']
+            .toLowerCase()
+            .contains(_searchText.toLowerCase())) {
+          tempList.add(filteredNames[i]);
+        }
+      }
+      filteredNames = tempList;
+    }
     return DefaultTabController(
         length: 6,
         child: Scaffold(
@@ -35,56 +68,64 @@ class _StoreState extends State<Store> {
               color: Colors.black,
             ),
             // foregroundColor: Colors.black,
-            actions: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  border: Border.all(
-                      color: const Color(0xffc0e2af),
-                      style: BorderStyle.solid,
-                      width: 4),
-                ),
-                height: 10,
-                width: 105,
-                // alignment: Alignment.center,
-                margin: EdgeInsets.all(3),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    DropdownButton<String>(
-                      value: dropdownValue,
-                      icon: const Icon(Icons.arrow_downward),
-                      iconSize: 20,
-                      style: const TextStyle(color: Colors.black),
-                      alignment: Alignment.center,
-                      underline: Container(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownValue = newValue!;
-                          if (dropdownValue == '북구・남구') {
-                            total = true;
-                          } else {
-                            total = false;
-                            if (dropdownValue == '남구') {
-                              Bukgu = false;
+            title: _appBarTitle,
+            actions: <Widget>[
+              if (!searching)
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    border: Border.all(
+                        color: const Color(0xffc0e2af),
+                        style: BorderStyle.solid,
+                        width: 4),
+                  ),
+                  height: 10,
+                  width: 105,
+                  // alignment: Alignment.center,
+                  margin: EdgeInsets.all(3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      DropdownButton<String>(
+                        value: dropdownValue,
+                        icon: const Icon(Icons.arrow_downward),
+                        iconSize: 20,
+                        style: const TextStyle(color: Colors.black),
+                        alignment: Alignment.center,
+                        underline: Container(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue!;
+                            if (dropdownValue == '북구・남구') {
+                              total = true;
                             } else {
-                              Bukgu = true;
+                              total = false;
+                              if (dropdownValue == '남구') {
+                                Bukgu = false;
+                              } else {
+                                Bukgu = true;
+                              }
                             }
-                          }
-                        });
-                      },
-                      items: <String>['북구・남구', '북구', '남구']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Center(child: Text(value)),
-                        );
-                      }).toList(),
-                    ),
-                  ],
+                          });
+                        },
+                        items: <String>['북구・남구', '북구', '남구']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Center(child: Text(value)),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
                 ),
-              )
+              IconButton(
+                icon: _searchIcon,
+                onPressed: () {
+                  _searchPressed();
+                },
+              ),
             ],
             bottom: const PreferredSize(
               child: TabBar(
@@ -107,30 +148,57 @@ class _StoreState extends State<Store> {
           ),
           body: TabBarView(
             children: [
-              _buildTabBarView('한식', Bukgu, total),
-              _buildTabBarView('양식', Bukgu, total),
-              _buildTabBarView('중식', Bukgu, total),
-              _buildTabBarView('일식', Bukgu, total),
-              _buildTabBarView('분식', Bukgu, total),
-              _buildTabBarView('카페', Bukgu, total),
+              _buildTabBarView('한식', Bukgu, total, searching, _searchText),
+              _buildTabBarView('양식', Bukgu, total, searching, _searchText),
+              _buildTabBarView('중식', Bukgu, total, searching, _searchText),
+              _buildTabBarView('일식', Bukgu, total, searching, _searchText),
+              _buildTabBarView('분식', Bukgu, total, searching, _searchText),
+              _buildTabBarView('카페', Bukgu, total, searching, _searchText),
             ],
           ),
         ));
   }
+
+  void _searchPressed() {
+    setState(() {
+      if (_searchIcon.icon == Icons.search) {
+        searching = true;
+        _searchIcon = const Icon(Icons.close);
+        _appBarTitle = TextField(
+          controller: _filter,
+          decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.search), hintText: '제휴점 검색'),
+        );
+      } else {
+        _searchIcon = const Icon(Icons.search);
+        searching = false;
+        _appBarTitle = const Text('');
+        filteredNames = names;
+        _filter.clear();
+      }
+    });
+  }
 }
 
-Widget _buildTabBarView(String category, bool Bukgu, bool total) {
+Widget _buildTabBarView(String category, bool Bukgu, bool total, bool searching,
+    String _searchText) {
   return StreamBuilder<QuerySnapshot>(
       stream: total
-          ? (FirebaseFirestore.instance
-          .collection('store')
-          .where('category', isEqualTo: category)
-          .snapshots())
+          ? (searching
+              ? (FirebaseFirestore.instance
+                  .collection('store')
+                  .where('category', isEqualTo: category)
+                  .where('menu',arrayContains: _searchText)
+                  .snapshots())
+              : (FirebaseFirestore.instance
+                  .collection('store')
+                  .where('category', isEqualTo: category)
+                  .snapshots()))
           : (FirebaseFirestore.instance
-          .collection('store')
-          .where('category', isEqualTo: category)
-          .where('address_gu', isEqualTo: (Bukgu ? '북구' : '남구'))
-          .snapshots()),
+              .collection('store')
+              .where('category', isEqualTo: category)
+              .where('address_gu', isEqualTo: (Bukgu ? '북구' : '남구'))
+              .snapshots()),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
@@ -142,7 +210,7 @@ Widget _buildTabBarView(String category, bool Bukgu, bool total) {
         return ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
-            document.data()! as Map<String, dynamic>;
+                document.data()! as Map<String, dynamic>;
             return Column(
               children: [
                 ListTile(
