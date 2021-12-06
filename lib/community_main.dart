@@ -29,7 +29,7 @@ class _CommunityMainState extends State<CommunityMain> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.grey,
+            color: Colors.black,
           ),
           onPressed: () {
             Navigator.pop(context);
