@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:intl/intl.dart';
@@ -85,7 +86,7 @@ class _CommunityState extends State<Community> {
                                   children: [
                                     Text(
                                       data["title"],
-                                      style: const TextStyle(fontSize: 15),
+                                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
