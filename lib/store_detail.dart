@@ -231,12 +231,12 @@ class _StoreDetailState extends State<StoreDetail> {
                                     builder: (BuildContext context,
                                         AsyncSnapshot<QuerySnapshot> snapshot) {
                                       if (snapshot.hasError) {
-                                        return Text('Something went wrong');
+                                        return const Text('Something went wrong');
                                       }
 
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {
-                                        return Text("Loading");
+                                        return const Text("Loading");
                                       }
                                       return ListView(
                                         children: snapshot.data!.docs
@@ -275,7 +275,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                               const SizedBox(height: 10),
                                               if (!data['noImage'])
                                                 Center(
-                                                  child: Container(
+                                                  child: SizedBox(
                                                       width: 200,
                                                       child: Image.network(
                                                           data['imageUrl'],
@@ -286,7 +286,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                                 ),
                                               const SizedBox(height: 10),
 
-                                              Text(data['content'], style: TextStyle(fontSize: 17)),
+                                              Text(data['content'], style: const TextStyle(fontSize: 15)),
                                               const Divider(thickness: 2,),
 
                                             ],

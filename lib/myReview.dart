@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -43,12 +44,13 @@ class _MyReviewPageState extends State<MyReviewPage> {
                 leading: IconButton(
                   icon: const Icon(
                     Icons.arrow_back,
-                    color: Colors.grey,
+                    color: Colors.black,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
+                elevation: 3,
               ),
               body: ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
@@ -78,7 +80,7 @@ class _MyReviewPageState extends State<MyReviewPage> {
                           children: [
                             Text(
                               data['content'],
-                              style: const TextStyle(fontSize: 11),
+                              style: const TextStyle(fontSize: 14),
                             ),
                             const SizedBox(height: 10),
                             Row(
@@ -101,7 +103,7 @@ class _MyReviewPageState extends State<MyReviewPage> {
                             },
                             icon: const Icon(Icons.navigate_next)),
                       ),
-                      const Divider(),
+                      const Divider(thickness: 1,),
                     ],
                   );
                 }).toList(),
