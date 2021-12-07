@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'store.dart';
 import 'add_review.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 class StoreDetail extends StatefulWidget {
   const StoreDetail({Key? key}) : super(key: key);
@@ -220,7 +221,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                   ],
                                 ),
 
-                                // third tab bar
+                                // third tab bar - 리
                                 StreamBuilder<QuerySnapshot> (
 
                                     stream: FirebaseFirestore.instance
@@ -238,16 +239,21 @@ class _StoreDetailState extends State<StoreDetail> {
                                           ConnectionState.waiting) {
                                         return const Text("Loading");
                                       }
+
                                       return ListView(
                                         children: snapshot.data!.docs
                                             .map((DocumentSnapshot document) {
                                           Map<String, dynamic> data = document
                                               .data()! as Map<String, dynamic>;
 
+                                          int Created_i = int.parse(data['created']);
+                                          var Created_d = DateFormat('yy/MM/dd - HH:mm:ss').format(DateTime.fromMillisecondsSinceEpoch(Created_i));
+
                                           return Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
                                                   ClipOval(
                                                     child: Image.network('https://st4.depositphotos.com/1156795/20814/v/950/depositphotos_208142514-stock-illustration-profile-placeholder-image-gray-silhouette.jpg',
@@ -270,6 +276,14 @@ class _StoreDetailState extends State<StoreDetail> {
                                                       )
                                                     ],
                                                   ),
+
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                       const SizedBox(width: 15),
+                                                      Text(Created_d),
+                                                    ],
+                                                  )
                                                 ],
                                               ),
                                               const SizedBox(height: 10),
