@@ -39,12 +39,13 @@ class _FavoritePageState extends State<FavoritePage> {
                 leading: IconButton(
                   icon: const Icon(
                     Icons.arrow_back,
-                    color: Colors.grey,
+                    color: Colors.black,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
+                elevation: 3,
               ),
               body: ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {

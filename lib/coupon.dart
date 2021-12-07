@@ -44,7 +44,7 @@ class _CouponPageState extends State<CouponPage> {
                 iconTheme: const IconThemeData(
                   color: Colors.black,
                 ),
-                elevation: 0,
+                 elevation: 3,
               ),
               body: ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
@@ -52,6 +52,7 @@ class _CouponPageState extends State<CouponPage> {
                       document.data()! as Map<String, dynamic>;
 
                   return Column(children: [
+                    SizedBox(height: 5),
                     Center(
                         child: Container(
                             height: 50,
