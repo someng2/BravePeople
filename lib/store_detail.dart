@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'store.dart';
 import 'add_review.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class StoreDetail extends StatefulWidget {
   const StoreDetail({Key? key}) : super(key: key);
@@ -13,6 +17,7 @@ class StoreDetail extends StatefulWidget {
 }
 
 class _StoreDetailState extends State<StoreDetail> {
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Store_id;
@@ -45,8 +50,20 @@ class _StoreDetailState extends State<StoreDetail> {
               body: ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
+                  document.data()! as Map<String, dynamic>;
                   int menu_length = data['menu'].length;
+
+                  bool flag = false;
+
+                  var userEmail = FirebaseAuth.instance.currentUser!.email;
+
+                  for(var i = 0; i < data['client'].length; i++)
+                  {
+                    if(data['client'][i] == userEmail)
+                    {
+                      flag = true;
+                    }
+                  }
 
                   return Column(
                     children: [
@@ -64,6 +81,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                 size: 25,
                               ),
                             ]),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -71,9 +89,24 @@ class _StoreDetailState extends State<StoreDetail> {
                             Text(data['phone']),
                             SizedBox(width: 110),
                             IconButton(
-                                icon: Icon(Icons.favorite_border),
+                                icon: flag ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+                                color: flag ? Colors.red : null,
                                 onPressed: () {
-                                  // 찜 목록에 제휴점 추가
+                                  if(flag)
+                                  {
+                                    FirebaseFirestore.instance.collection('store').doc(document.id).update(
+                                        {
+                                          'client': FieldValue.arrayRemove([userEmail])
+                                        }
+                                    );
+                                  }
+                                  else {
+                                    FirebaseFirestore.instance.collection('store').doc(document.id).update(
+                                        {
+                                          'client': FieldValue.arrayUnion([userEmail])
+                                        }
+                                    );
+                                  }
                                 }),
                           ],
                         ),
@@ -124,7 +157,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                 // first tab bar view widget
                                 Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       for (int i = 0; i < menu_length; i++)
                                         Row(children: [
@@ -140,7 +173,20 @@ class _StoreDetailState extends State<StoreDetail> {
                                             ],
                                           ),
                                         ]),
-                                    ]),
+                                      Row(
+                                        children: [
+                                          Text ('위치 : '),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pushNamed(context, '/map', arguments: Store_id(data['store_id']),);
+                                            },
+                                            child: Icon(Icons.map, color: Color(0xff13740B)),
+                                            style: ElevatedButton.styleFrom(shape: StadiumBorder(),primary: Color(0xffC0E2AF)),
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                ),
 
                                 // second tab bar view widget
                                 Column(
@@ -180,7 +226,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                     stream: FirebaseFirestore.instance
                                         .collection('review')
                                         .where('store_id',
-                                            isEqualTo: args.store_id)
+                                        isEqualTo: args.store_id)
                                         .snapshots(),
                                     builder: (BuildContext context,
                                         AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -215,12 +261,12 @@ class _StoreDetailState extends State<StoreDetail> {
                                                     children: [
                                                       Text(data['nickname']),
                                                       Row(
-                                                        children: [
-                                                          for(int i = 0; i < data['star']; i++)
-                                                            const Icon(Icons.star_outlined,
-                                                              color: Colors.yellow,
-                                                              size: 22,)
-                                                        ]
+                                                          children: [
+                                                            for(int i = 0; i < data['star']; i++)
+                                                              const Icon(Icons.star_outlined,
+                                                                color: Colors.yellow,
+                                                                size: 22,)
+                                                          ]
                                                       )
                                                     ],
                                                   ),
@@ -282,3 +328,4 @@ class _StoreDetailState extends State<StoreDetail> {
         });
   }
 }
+
