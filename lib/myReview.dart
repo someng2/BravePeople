@@ -14,7 +14,6 @@ class _MyReviewPageState extends State<MyReviewPage> {
 
   String nickname = '';
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -93,13 +92,9 @@ class _MyReviewPageState extends State<MyReviewPage> {
                         ),
                         trailing: IconButton(
                             onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                StoreDetail.routeName,
-                                arguments: Store_id(data['store_id']),
-                              );
+                              FirebaseFirestore.instance.collection('review').doc(document.id).delete();
                             },
-                            icon: const Icon(Icons.navigate_next)),
+                            icon: const Icon(Icons.delete)),
                       ),
                       const Divider(),
                     ],
