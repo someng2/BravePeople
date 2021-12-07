@@ -61,102 +61,115 @@ class _StoreState extends State<Store> {
     return DefaultTabController(
         length: 6,
         child: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 55,
-            backgroundColor: Colors.white,
-            iconTheme: const IconThemeData(
-              color: Colors.black,
-            ),
-            // foregroundColor: Colors.black,
-            title: _appBarTitle,
-            actions: <Widget>[
-              if (!searching)
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    border: Border.all(
-                        color: const Color(0xffc0e2af),
-                        style: BorderStyle.solid,
-                        width: 4),
-                  ),
-                  height: 10,
-                  width: 105,
-                  // alignment: Alignment.center,
-                  margin: EdgeInsets.all(3),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      DropdownButton<String>(
-                        value: dropdownValue,
-                        icon: const Icon(Icons.arrow_downward),
-                        iconSize: 20,
-                        style: const TextStyle(color: Colors.black),
-                        alignment: Alignment.center,
-                        underline: Container(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownValue = newValue!;
-                            if (dropdownValue == '북구・남구') {
-                              total = true;
-                            } else {
-                              total = false;
-                              if (dropdownValue == '남구') {
-                                Bukgu = false;
-                              } else {
-                                Bukgu = true;
-                              }
-                            }
-                          });
-                        },
-                        items: <String>['북구・남구', '북구', '남구']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Center(child: Text(value)),
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  ),
+            appBar: AppBar(
+                toolbarHeight: 55,
+                backgroundColor: Colors.white,
+                iconTheme: const IconThemeData(
+                  color: Colors.black,
                 ),
-              IconButton(
-                icon: _searchIcon,
-                onPressed: () {
-                  _searchPressed();
-                },
-              ),
-            ],
-            bottom: const PreferredSize(
-              child: TabBar(
-                  isScrollable: true,
-                  indicatorColor: Color(0xffc0e2af),
-                  //unselectedLabelColor: Color(0x00c0e2af),
-                  labelColor: Colors.black,
-                  tabs: [
-                    Tab(
-                      text: '한식',
+                // foregroundColor: Colors.black,
+                title: _appBarTitle,
+                actions: <Widget>[
+                  if (!searching)
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: const Color(0xffc0e2af),
+                            style: BorderStyle.solid,
+                            width: 4),
+                      ),
+                      height: 10,
+                      width: 105,
+                      // alignment: Alignment.center,
+                      margin: EdgeInsets.all(3),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          DropdownButton<String>(
+                            value: dropdownValue,
+                            icon: const Icon(Icons.arrow_downward),
+                            iconSize: 20,
+                            style: const TextStyle(color: Colors.black),
+                            alignment: Alignment.center,
+                            underline: Container(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownValue = newValue!;
+                                if (dropdownValue == '북구・남구') {
+                                  total = true;
+                                } else {
+                                  total = false;
+                                  if (dropdownValue == '남구') {
+                                    Bukgu = false;
+                                  } else {
+                                    Bukgu = true;
+                                  }
+                                }
+                              });
+                            },
+                            items: <String>['북구・남구', '북구', '남구']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Center(child: Text(value)),
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      ),
                     ),
-                    Tab(text: '아시안・양식'),
-                    Tab(text: '중식'),
-                    Tab(text: '일식'),
-                    Tab(text: '분식'),
-                    Tab(text: '카페・디저트'),
-                  ]),
-              preferredSize: Size.fromHeight(40),
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              _buildTabBarView('한식', Bukgu, total, searching, _searchText),
-              _buildTabBarView('양식', Bukgu, total, searching, _searchText),
-              _buildTabBarView('중식', Bukgu, total, searching, _searchText),
-              _buildTabBarView('일식', Bukgu, total, searching, _searchText),
-              _buildTabBarView('분식', Bukgu, total, searching, _searchText),
-              _buildTabBarView('카페', Bukgu, total, searching, _searchText),
-            ],
-          ),
-        ));
+                  IconButton(
+                    icon: _searchIcon,
+                    onPressed: () {
+                      _searchPressed();
+                    },
+                  ),
+                ],
+                // if (searching)
+                bottom: (searching
+                    ? const PreferredSize(
+                        preferredSize: Size.fromHeight(10),
+                        child: SizedBox(
+                          height: 10,
+                        ))
+                    : const PreferredSize(
+                        child: TabBar(
+                            isScrollable: true,
+                            indicatorColor: Color(0xffc0e2af),
+                            //unselectedLabelColor: Color(0x00c0e2af),
+                            labelColor: Colors.black,
+                            tabs: [
+                              Tab(
+                                text: '한식',
+                              ),
+                              Tab(text: '아시안・양식'),
+                              Tab(text: '중식'),
+                              Tab(text: '일식'),
+                              Tab(text: '분식'),
+                              Tab(text: '카페・디저트'),
+                            ]),
+                        preferredSize: Size.fromHeight(40),
+                      ))),
+            body: (searching
+                ? _buildTabBarView('no', Bukgu, total, searching, _searchText)
+                : TabBarView(
+                    children: [
+                      _buildTabBarView(
+                          '한식', Bukgu, total, searching, _searchText),
+                      _buildTabBarView(
+                          '양식', Bukgu, total, searching, _searchText),
+                      _buildTabBarView(
+                          '중식', Bukgu, total, searching, _searchText),
+                      _buildTabBarView(
+                          '일식', Bukgu, total, searching, _searchText),
+                      _buildTabBarView(
+                          '분식', Bukgu, total, searching, _searchText),
+                      _buildTabBarView(
+                          '카페', Bukgu, total, searching, _searchText),
+                    ],
+                  ))));
   }
 
   void _searchPressed() {
@@ -167,7 +180,14 @@ class _StoreState extends State<Store> {
         _appBarTitle = TextField(
           controller: _filter,
           decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.search), hintText: '제휴점 검색'),
+              prefixIcon: Icon(Icons.search, color: Color(0xffc0e2af)), hintText: '메뉴 검색',
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Color(0xffc0e2af), width: 2),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Color(0xffc0e2af), width: 2),
+            ),
+          ),
         );
       } else {
         _searchIcon = const Icon(Icons.search);
@@ -187,18 +207,24 @@ Widget _buildTabBarView(String category, bool Bukgu, bool total, bool searching,
           ? (searching
               ? (FirebaseFirestore.instance
                   .collection('store')
-                  .where('category', isEqualTo: category)
-                  .where('menu',arrayContains: _searchText)
+                  // .where('name', isEqualTo: _searchText)
+          .where('menu', arrayContains: _searchText)
                   .snapshots())
               : (FirebaseFirestore.instance
                   .collection('store')
                   .where('category', isEqualTo: category)
                   .snapshots()))
-          : (FirebaseFirestore.instance
-              .collection('store')
-              .where('category', isEqualTo: category)
-              .where('address_gu', isEqualTo: (Bukgu ? '북구' : '남구'))
-              .snapshots()),
+          : (searching
+              ? (FirebaseFirestore.instance
+                  .collection('store')
+                  .where('menu', arrayContains: _searchText)
+                  .where('address_gu', isEqualTo: (Bukgu ? '북구' : '남구'))
+                  .snapshots())
+              : FirebaseFirestore.instance
+                  .collection('store')
+                  .where('category', isEqualTo: category)
+                  .where('address_gu', isEqualTo: (Bukgu ? '북구' : '남구'))
+                  .snapshots()),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
