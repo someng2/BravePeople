@@ -39,12 +39,13 @@ class _FavoritePageState extends State<FavoritePage> {
                 leading: IconButton(
                   icon: const Icon(
                     Icons.arrow_back,
-                    color: Colors.grey,
+                    color: Colors.black,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
+                elevation: 3,
               ),
               body: ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
@@ -90,7 +91,7 @@ class _FavoritePageState extends State<FavoritePage> {
                               Navigator.pushNamed(
                                 context,
                                 StoreDetail.routeName,
-                                arguments: Store_id(data['store_id']),
+                                arguments: Store_id(data['store_id'], data['latitude'], data['longitude']),
                               );
                             },
                             icon: const Icon(Icons.navigate_next)),
