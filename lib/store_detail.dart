@@ -57,6 +57,12 @@ class _StoreDetailState extends State<StoreDetail> {
 
                   var userEmail = FirebaseAuth.instance.currentUser!.email;
 
+                  String star_avg = '';
+                  if (data['review_count'] > 0) {
+                    star_avg = (data['star_sum'] / data['review_count'])
+                        .toStringAsFixed(1);
+                  }
+
                   for (var i = 0; i < data['client'].length; i++) {
                     if (data['client'][i] == userEmail) {
                       flag = true;
@@ -70,22 +76,26 @@ class _StoreDetailState extends State<StoreDetail> {
                           data['name'],
                           style: const TextStyle(fontSize: 30),
                         ),
+                        const SizedBox(height: 5),
+                        if (data['review_count'] != 0)
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.star_outlined,
+                            children: [
+                              const Icon(
+                                Icons.star,
                                 color: Colors.yellow,
                                 size: 25,
                               ),
+                              Text(star_avg, style: TextStyle(fontSize: 20),),
                             ]),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.phone, color: Colors.green),
+                            const Icon(Icons.phone, color: Colors.green),
+                            const SizedBox(width: 7),
                             Text(data['phone']),
-                            SizedBox(width: 110),
+                            const SizedBox(width: 110),
                             IconButton(
                                 icon: flag
                                     ? Icon(Icons.favorite)
@@ -228,7 +238,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                   ],
                                 ),
 
-                                // third tab bar - 리
+                                // third tab bar - 리뷰
                                 StreamBuilder<QuerySnapshot>(
                                     stream: FirebaseFirestore.instance
                                         .collection('review')
@@ -300,7 +310,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.end,
                                                     children: [
-                                                      const SizedBox(width: 15),
+                                                      const SizedBox(width: 20),
                                                       Text(Created_d),
                                                     ],
                                                   )
