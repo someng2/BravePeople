@@ -88,7 +88,8 @@ class _StoreState extends State<Store> {
                         children: [
                           DropdownButton<String>(
                             value: dropdownValue,
-                            icon: const Icon(Icons.arrow_downward, color: Color(0xffc0e2af)),
+                            icon: const Icon(Icons.arrow_downward,
+                                color: Color(0xffc0e2af)),
                             iconSize: 22,
                             style: const TextStyle(color: Colors.black),
                             alignment: Alignment.center,
@@ -179,7 +180,8 @@ class _StoreState extends State<Store> {
         _appBarTitle = TextField(
           controller: _filter,
           decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.search, color: Color(0xffc0e2af)), hintText: '메뉴 검색',
+            prefixIcon: Icon(Icons.search, color: Color(0xffc0e2af)),
+            hintText: '메뉴 검색',
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Color(0xffc0e2af), width: 2),
             ),
@@ -207,7 +209,7 @@ Widget _buildTabBarView(String category, bool Bukgu, bool total, bool searching,
               ? (FirebaseFirestore.instance
                   .collection('store')
                   // .where('name', isEqualTo: _searchText)
-          .where('menu', arrayContains: _searchText)
+                  .where('menu', arrayContains: _searchText)
                   .snapshots())
               : (FirebaseFirestore.instance
                   .collection('store')
@@ -232,10 +234,14 @@ Widget _buildTabBarView(String category, bool Bukgu, bool total, bool searching,
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text("Loading");
         }
+
         return ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
+
+            String menu1 = data['menu'][0];
+            String menu2 = data['menu'][1];
             return Column(
               children: [
                 ListTile(
@@ -250,21 +256,11 @@ Widget _buildTabBarView(String category, bool Bukgu, bool total, bool searching,
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            data['menu'][0],
-                            style: const TextStyle(fontSize: 11),
-                          ),
-                          const Text(
-                            ', ',
-                            style: TextStyle(fontSize: 11),
-                          ),
-                          Text(
-                            data['menu'][1],
-                            style: const TextStyle(fontSize: 11),
-                          ),
-                        ],
+                      Text(
+                        '$menu1 , $menu2',
+                        softWrap: true,
+                        // maxLines: 1,
+                        style: const TextStyle(fontSize: 12),
                       ),
                       const SizedBox(height: 10),
                       Text(data['business_time']),
@@ -280,7 +276,9 @@ Widget _buildTabBarView(String category, bool Bukgu, bool total, bool searching,
                       },
                       icon: const Icon(Icons.navigate_next)),
                 ),
-                const Divider(thickness: 1,),
+                const Divider(
+                  thickness: 1,
+                ),
               ],
             );
           }).toList(),
