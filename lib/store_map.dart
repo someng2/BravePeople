@@ -19,19 +19,25 @@ class _MapPagePageState extends State<MapPage> {
 
   Completer<GoogleMapController> _controller = Completer();
 
+  String star_avg = '';
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     final args = ModalRoute.of(context)!.settings.arguments as Store_id;
 
+    if (args.review_count > 0) {
+      star_avg = (args.star_sum / args.review_count)
+          .toStringAsFixed(1);
+    }
 
     _markers.add(Marker(
         markerId: MarkerId("1"),
         draggable: true,
         onTap: () {
           var  bottomSheetController=scaffoldKey.currentState!.showBottomSheet((context) => Container(
-            child: getBottomSheet(args.name, args.review_count, args.address_gu, args.address, args.phone, args.image),
+            child: getBottomSheet(args.name, args.review_count, args.address_gu, args.address, args.phone, args.image, star_avg),
             height: 250,
             color: Colors.transparent,
           ));
@@ -78,7 +84,7 @@ class _MapPagePageState extends State<MapPage> {
     );
   }
 
-  Widget getBottomSheet(String name, int review_count, String address_gu, String address, String phone, String image)
+  Widget getBottomSheet(String name, int review_count, String address_gu, String address, String phone, String image, String star_avg)
   {
     return Stack(
       children: <Widget>[
@@ -109,9 +115,9 @@ class _MapPagePageState extends State<MapPage> {
                           ),),
                           SizedBox(height: 5,),
                           Row(children: <Widget>[
-                            Icon(Icons.reviews,color: Colors.yellow,),
+                            if(review_count != 0) Icon(Icons.star,color: Colors.yellow,),
                             SizedBox(width: 10,),
-                            Text('$review_count' + ' reviews',style: TextStyle(
+                            Text('$star_avg',style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14
                             ))
