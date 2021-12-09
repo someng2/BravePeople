@@ -13,8 +13,9 @@ class Store_id {
   final String address;
   final String phone;
   final String image;
+  final int star_sum;
 
-  Store_id(this.store_id, this.latitude, this.longitude, this.name, this.review_count, this.address_gu, this.address, this.phone, this.image);
+  Store_id(this.store_id, this.latitude, this.longitude, this.name, this.review_count, this.address_gu, this.address, this.phone, this.image, this.star_sum);
 }
 
 
@@ -280,7 +281,7 @@ Widget _buildTabBarView(String category, bool Bukgu, bool total, bool searching,
                         Navigator.pushNamed(
                           context,
                           StoreDetail.routeName,
-                          arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image']),
+                          arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image'], data['star_sum']),
                         );
                       },
                       icon: const Icon(Icons.navigate_next)),
