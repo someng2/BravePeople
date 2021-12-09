@@ -91,7 +91,7 @@ class _FavoritePageState extends State<FavoritePage> {
                               Navigator.pushNamed(
                                 context,
                                 StoreDetail.routeName,
-                                arguments: Store_id(data['store_id'], data['latitude'], data['longitude']),
+                                arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image']),
                               );
                             },
                             icon: const Icon(Icons.navigate_next)),
