@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                           icon: Icon(Icons.people, size: 100, color: Colors.pinkAccent),
                           onPressed: () {
                             //커뮤니티로 가야함
-                            Navigator.pushNamed(context, '/community');
+                            Navigator.pushNamed(context, '/communityMain');
                           },
                       ),
                       const SizedBox(height: 100.0),
