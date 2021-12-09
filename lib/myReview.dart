@@ -99,7 +99,7 @@ class _MyReviewPageState extends State<MyReviewPage> {
                               Navigator.pushNamed(
                                 context,
                                 StoreDetail.routeName,
-                                arguments: Store_id(data['store_id'], 0.0, 0.0, "", 0, "", "", "", ""),
+                                arguments: Store_id(data['store_id'], 0.0, 0.0, "", 0, "", "", "", "", 0),
                               );
                             },
                             icon: const Icon(Icons.navigate_next)),
