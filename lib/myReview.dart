@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -12,7 +13,9 @@ class MyReviewPage extends StatefulWidget {
 
 class _MyReviewPageState extends State<MyReviewPage> {
 
+
   String nickname = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +45,13 @@ class _MyReviewPageState extends State<MyReviewPage> {
                 leading: IconButton(
                   icon: const Icon(
                     Icons.arrow_back,
-                    color: Colors.grey,
+                    color: Colors.black,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
+                elevation: 3,
               ),
               body: ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
@@ -64,11 +68,11 @@ class _MyReviewPageState extends State<MyReviewPage> {
                               width: 80,
                               height: 80,
                             )
-                            : ClipOval(
+                                : ClipOval(
                               child: Image.network('https://st4.depositphotos.com/1156795/20814/v/950/depositphotos_208142514-stock-illustration-profile-placeholder-image-gray-silhouette.jpg',
-                              width: 80,
-                              height: 100,
-                              fit: BoxFit.cover,
+                                width: 80,
+                                height: 100,
+                                fit: BoxFit.cover,
                               ),
                             )),
                         title: Text(data['store_name']),
@@ -77,7 +81,7 @@ class _MyReviewPageState extends State<MyReviewPage> {
                           children: [
                             Text(
                               data['content'],
-                              style: const TextStyle(fontSize: 11),
+                              style: const TextStyle(fontSize: 14),
                             ),
                             const SizedBox(height: 10),
                             Row(
@@ -92,11 +96,15 @@ class _MyReviewPageState extends State<MyReviewPage> {
                         ),
                         trailing: IconButton(
                             onPressed: () {
-                              FirebaseFirestore.instance.collection('review').doc(document.id).delete();
+                              Navigator.pushNamed(
+                                context,
+                                StoreDetail.routeName,
+                                arguments: Store_id(data['store_id'], 0.0, 0.0, "", 0, "", "", "", ""),
+                              );
                             },
-                            icon: const Icon(Icons.delete)),
+                            icon: const Icon(Icons.navigate_next)),
                       ),
-                      const Divider(),
+                      const Divider(thickness: 1,),
                     ],
                   );
                 }).toList(),
