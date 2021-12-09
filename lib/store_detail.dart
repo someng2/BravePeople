@@ -190,7 +190,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                             Text ('위치 : '),
                                             ElevatedButton(
                                               onPressed: () {
-                                                Navigator.pushNamed(context, '/map', arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image']),);
+                                                Navigator.pushNamed(context, '/map', arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image'], data['star_sum']),);
                                               },
                                               child: Icon(Icons.map, color: Color(0xff13740B)),
                                               style: ElevatedButton.styleFrom(shape: StadiumBorder(),primary: Color(0xffC0E2AF)),
@@ -338,7 +338,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                 Navigator.pushNamed(
                                   context,
                                   AddReview.routeName,
-                                  arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image']),
+                                  arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image'], data['star_sum']),
                                 );
                               },
                               child: const Icon(
