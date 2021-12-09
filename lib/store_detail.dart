@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'store.dart';
 import 'add_review.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 class StoreDetail extends StatefulWidget {
   const StoreDetail({Key? key}) : super(key: key);
@@ -57,6 +58,13 @@ class _StoreDetailState extends State<StoreDetail> {
 
                   var userEmail = FirebaseAuth.instance.currentUser!.email;
 
+                  String star_avg = '';
+
+                  if (data['review_count'] > 0) {
+                    star_avg = (data['star_sum'] / data['review_count'])
+                        .toStringAsFixed(1);
+                  }
+
                   for(var i = 0; i < data['client'].length; i++)
                   {
                     if(data['client'][i] == userEmail)
@@ -72,20 +80,24 @@ class _StoreDetailState extends State<StoreDetail> {
                           data['name'],
                           style: const TextStyle(fontSize: 30),
                         ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.star_outlined,
-                                color: Colors.yellow,
-                                size: 25,
-                              ),
-                            ]),
+                        const SizedBox(height: 5),
+                        if (data['review_count'] != 0)
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                  size: 25,
+                                ),
+                                Text(star_avg, style: TextStyle(fontSize: 20),),
+                              ]),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.phone, color: Colors.green),
+                            const SizedBox(width: 7),
                             Text(data['phone']),
                             SizedBox(width: 110),
                             IconButton(
@@ -174,16 +186,16 @@ class _StoreDetailState extends State<StoreDetail> {
                                           ),
                                         ]),
                                       Row(
-                                        children: [
-                                          Text ('위치 : '),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.pushNamed(context, '/map', arguments: Store_id(data['store_id']),);
-                                            },
-                                            child: Icon(Icons.map, color: Color(0xff13740B)),
-                                            style: ElevatedButton.styleFrom(shape: StadiumBorder(),primary: Color(0xffC0E2AF)),
-                                          )
-                                        ]
+                                          children: [
+                                            Text ('위치 : '),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.pushNamed(context, '/map', arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image']),);
+                                              },
+                                              child: Icon(Icons.map, color: Color(0xff13740B)),
+                                              style: ElevatedButton.styleFrom(shape: StadiumBorder(),primary: Color(0xffC0E2AF)),
+                                            )
+                                          ]
                                       )
                                     ]
                                 ),
@@ -194,15 +206,16 @@ class _StoreDetailState extends State<StoreDetail> {
                                   children: [
                                     Row(
                                       children: [
-                                        const Text('주소: '),
+                                        const Icon(Icons.location_on),
                                         Text(data['address_gu']),
                                         const Text(' '),
                                         Text(data['address']),
                                       ],
                                     ),
+                                    const SizedBox(height: 5),
                                     Row(
                                       children: [
-                                        const Text('영업시간: '),
+                                        const Icon(Icons.access_time),
                                         Text(data['business_time']),
                                       ],
                                     ),
@@ -244,10 +257,20 @@ class _StoreDetailState extends State<StoreDetail> {
                                           Map<String, dynamic> data = document
                                               .data()! as Map<String, dynamic>;
 
+                                          int Created_i =
+                                          int.parse(data['created']);
+                                          var Created_d = DateFormat(
+                                              'yy/MM/dd - HH:mm:ss')
+                                              .format(DateTime
+                                              .fromMillisecondsSinceEpoch(
+                                              Created_i));
+
                                           return Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                                 children: [
                                                   ClipOval(
                                                     child: Image.network('https://st4.depositphotos.com/1156795/20814/v/950/depositphotos_208142514-stock-illustration-profile-placeholder-image-gray-silhouette.jpg',
@@ -270,6 +293,14 @@ class _StoreDetailState extends State<StoreDetail> {
                                                       )
                                                     ],
                                                   ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                    children: [
+                                                      const SizedBox(width: 20),
+                                                      Text(Created_d),
+                                                    ],
+                                                  )
                                                 ],
                                               ),
                                               const SizedBox(height: 10),
@@ -286,7 +317,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                                 ),
                                               const SizedBox(height: 10),
 
-                                              Text(data['content'], style: TextStyle(fontSize: 17)),
+                                              Text(data['content'], style: TextStyle(fontSize: 15)),
                                               const Divider(thickness: 2,),
 
                                             ],
@@ -307,7 +338,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                 Navigator.pushNamed(
                                   context,
                                   AddReview.routeName,
-                                  arguments: Store_id(data['store_id']),
+                                  arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image']),
                                 );
                               },
                               child: const Icon(
@@ -328,4 +359,3 @@ class _StoreDetailState extends State<StoreDetail> {
         });
   }
 }
-
