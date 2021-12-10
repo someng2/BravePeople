@@ -18,8 +18,6 @@ class StoreDetail extends StatefulWidget {
 }
 
 class _StoreDetailState extends State<StoreDetail> {
-
-
   Color new_color = Colors.black;
   bool new_pushed = false;
 
@@ -61,7 +59,7 @@ class _StoreDetailState extends State<StoreDetail> {
               body: ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
+                      document.data()! as Map<String, dynamic>;
                   int menu_length = data['menu'].length;
 
                   bool flag = false;
@@ -75,10 +73,8 @@ class _StoreDetailState extends State<StoreDetail> {
                         .toStringAsFixed(1);
                   }
 
-                  for(var i = 0; i < data['client'].length; i++)
-                  {
-                    if(data['client'][i] == userEmail)
-                    {
+                  for (var i = 0; i < data['client'].length; i++) {
+                    if (data['client'][i] == userEmail) {
                       flag = true;
                     }
                   }
@@ -100,7 +96,10 @@ class _StoreDetailState extends State<StoreDetail> {
                                   color: Colors.yellow,
                                   size: 25,
                                 ),
-                                Text(star_avg, style: TextStyle(fontSize: 20),),
+                                Text(
+                                  star_avg,
+                                  style: TextStyle(fontSize: 20),
+                                ),
                               ]),
 
                         Row(
@@ -111,23 +110,27 @@ class _StoreDetailState extends State<StoreDetail> {
                             Text(data['phone']),
                             SizedBox(width: 110),
                             IconButton(
-                                icon: flag ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+                                icon: flag
+                                    ? Icon(Icons.favorite)
+                                    : Icon(Icons.favorite_border),
                                 color: flag ? Colors.red : null,
                                 onPressed: () {
-                                  if(flag)
-                                  {
-                                    FirebaseFirestore.instance.collection('store').doc(document.id).update(
-                                        {
-                                          'client': FieldValue.arrayRemove([userEmail])
-                                        }
-                                    );
-                                  }
-                                  else {
-                                    FirebaseFirestore.instance.collection('store').doc(document.id).update(
-                                        {
-                                          'client': FieldValue.arrayUnion([userEmail])
-                                        }
-                                    );
+                                  if (flag) {
+                                    FirebaseFirestore.instance
+                                        .collection('store')
+                                        .doc(document.id)
+                                        .update({
+                                      'client':
+                                          FieldValue.arrayRemove([userEmail])
+                                    });
+                                  } else {
+                                    FirebaseFirestore.instance
+                                        .collection('store')
+                                        .doc(document.id)
+                                        .update({
+                                      'client':
+                                          FieldValue.arrayUnion([userEmail])
+                                    });
                                   }
                                 }),
                           ],
@@ -155,6 +158,7 @@ class _StoreDetailState extends State<StoreDetail> {
                               child: TabBar(
                                 labelColor: Colors.black,
                                 indicatorColor: Color(0xffc0e2af),
+                                indicatorWeight: 3,
                                 tabs: [
                                   Tab(
                                     text: '메뉴',
@@ -172,14 +176,15 @@ class _StoreDetailState extends State<StoreDetail> {
                           ),
                         ), // create widgets for each tab bar here
                         SizedBox(
-                            height: 200,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: TabBarView(children: [
+                          height: 200,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: TabBarView(
+                              children: [
                                 // first tab bar view widget
                                 Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       for (int i = 0; i < menu_length; i++)
                                         Row(children: [
@@ -195,20 +200,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                             ],
                                           ),
                                         ]),
-                                      Row(
-                                          children: [
-                                            Text ('위치 : '),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.pushNamed(context, '/map', arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image'], data['star_sum']),);
-                                              },
-                                              child: Icon(Icons.map, color: Color(0xff13740B)),
-                                              style: ElevatedButton.styleFrom(shape: StadiumBorder(),primary: Color(0xffC0E2AF)),
-                                            )
-                                          ]
-                                      )
-                                    ]
-                                ),
+                                    ]),
 
                                 // second tab bar view widget
                                 Column(
@@ -220,9 +212,48 @@ class _StoreDetailState extends State<StoreDetail> {
                                         Text(data['address_gu']),
                                         const Text(' '),
                                         Text(data['address']),
+                                        const SizedBox(width: 30),
                                       ],
                                     ),
-                                    const SizedBox(height: 5),
+                                    const SizedBox(height: 10),
+                                    Row(children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width -
+                                                20,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              '/map',
+                                              arguments: Store_id(
+                                                  data['store_id'],
+                                                  data['latitude'],
+                                                  data['longitude'],
+                                                  data['name'],
+                                                  data['review_count'],
+                                                  data['address_gu'],
+                                                  data['address'],
+                                                  data['phone'],
+                                                  data['image'],
+                                                  data['star_sum']),
+                                            );
+                                          },
+                                          // child: const Icon(Icons.map,
+                                          //     color: Color(0xff13740B)),
+                                          child: Stack(children: [
+                                            Image.asset('assets/map2.png',
+                                                fit: BoxFit.fitWidth),
+                                            Positioned(child: Text('지도 보기', style: TextStyle(color: Colors.black.withOpacity(0.4)),), bottom: 15, left: 100)
+                                          ]),
+                                          style: ElevatedButton.styleFrom(
+                                              // shape: const StadiumBorder(),
+                                              primary: Colors.white),
+                                        ),
+                                      ),
+                                    ]),
+                                    const SizedBox(height: 15),
                                     Row(
                                       children: [
                                         const Icon(Icons.access_time),
@@ -247,27 +278,27 @@ class _StoreDetailState extends State<StoreDetail> {
                                 StreamBuilder<QuerySnapshot>(
                                     stream: (new_pushed
                                         ? FirebaseFirestore.instance
-                                        .collection('review')
-                                        .where('store_id',
-                                        isEqualTo: args.store_id)
-                                        .orderBy('created',
-                                        descending: true)
-                                        .snapshots()
+                                            .collection('review')
+                                            .where('store_id',
+                                                isEqualTo: args.store_id)
+                                            .orderBy('created',
+                                                descending: true)
+                                            .snapshots()
                                         : (good_pushed
-                                        ? FirebaseFirestore.instance
-                                        .collection('review')
-                                        .where('store_id',
-                                        isEqualTo: args.store_id)
-                                        .orderBy('star',
-                                        descending: true)
-                                        .snapshots()
-                                        : FirebaseFirestore.instance
-                                        .collection('review')
-                                        .where('store_id',
-                                        isEqualTo: args.store_id)
-                                        .orderBy('star',
-                                        descending: false)
-                                        .snapshots())),
+                                            ? FirebaseFirestore.instance
+                                                .collection('review')
+                                                .where('store_id',
+                                                    isEqualTo: args.store_id)
+                                                .orderBy('star',
+                                                    descending: true)
+                                                .snapshots()
+                                            : FirebaseFirestore.instance
+                                                .collection('review')
+                                                .where('store_id',
+                                                    isEqualTo: args.store_id)
+                                                .orderBy('star',
+                                                    descending: false)
+                                                .snapshots())),
                                     builder: (BuildContext context,
                                         AsyncSnapshot<QuerySnapshot> snapshot) {
                                       if (snapshot.hasError) {
@@ -284,7 +315,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                         children: [
                                           Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                                MainAxisAlignment.end,
                                             children: [
                                               TextButton(
                                                 onPressed: () {
@@ -333,100 +364,100 @@ class _StoreDetailState extends State<StoreDetail> {
                                           Expanded(
                                             child: ListView(
                                               children: snapshot.data!.docs.map(
-                                                      (DocumentSnapshot document) {
-                                                    Map<String, dynamic> data =
+                                                  (DocumentSnapshot document) {
+                                                Map<String, dynamic> data =
                                                     document.data()!
-                                                    as Map<String, dynamic>;
+                                                        as Map<String, dynamic>;
 
-                                                    int Created_i =
+                                                int Created_i =
                                                     int.parse(data['created']);
-                                                    var Created_d = DateFormat(
+                                                var Created_d = DateFormat(
                                                         'yy/MM/dd HH:mm:ss')
-                                                        .format(DateTime
+                                                    .format(DateTime
                                                         .fromMillisecondsSinceEpoch(
-                                                        Created_i));
+                                                            Created_i));
 
-                                                    return Column(
-                                                      crossAxisAlignment:
+                                                return Column(
+                                                  crossAxisAlignment:
                                                       CrossAxisAlignment.start,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .start,
-                                                          children: [
-                                                            ClipOval(
-                                                              child: Image.network(
-                                                                'https://st4.depositphotos.com/1156795/20814/v/950/depositphotos_208142514-stock-illustration-profile-placeholder-image-gray-silhouette.jpg',
-                                                                width: 40,
-                                                                height: 40,
-                                                                fit: BoxFit.cover,
-                                                              ),
-                                                            ),
-                                                            Column(
-                                                              crossAxisAlignment:
+                                                      children: [
+                                                        ClipOval(
+                                                          child: Image.network(
+                                                            'https://st4.depositphotos.com/1156795/20814/v/950/depositphotos_208142514-stock-illustration-profile-placeholder-image-gray-silhouette.jpg',
+                                                            width: 40,
+                                                            height: 40,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .start,
-                                                              children: [
-                                                                Text(data[
+                                                          children: [
+                                                            Text(data[
                                                                 'nickname']),
-                                                                Row(children: [
-                                                                  for (int i = 0;
+                                                            Row(children: [
+                                                              for (int i = 0;
                                                                   i <
                                                                       data[
-                                                                      'star'];
+                                                                          'star'];
                                                                   i++)
-                                                                    const Icon(
-                                                                      Icons
-                                                                          .star_outlined,
-                                                                      color: Colors
-                                                                          .yellow,
-                                                                      size: 22,
-                                                                    )
-                                                                ])
-                                                              ],
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                              children: [
-                                                                const SizedBox(
-                                                                    width: 20),
-                                                                Text(Created_d),
-                                                              ],
-                                                            )
+                                                                const Icon(
+                                                                  Icons
+                                                                      .star_outlined,
+                                                                  color: Colors
+                                                                      .yellow,
+                                                                  size: 22,
+                                                                )
+                                                            ])
                                                           ],
                                                         ),
-                                                        const SizedBox(height: 10),
-                                                        if (!data['noImage'])
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: 200,
-                                                                child: Image.network(
-                                                                    data[
-                                                                    'imageUrl'],
-                                                                    fit: BoxFit
-                                                                        .contain)),
-                                                          ),
-                                                        const SizedBox(height: 10),
-                                                        Text(data['content'],
-                                                            style: const TextStyle(
-                                                                fontSize: 15)),
-                                                        const Divider(
-                                                          thickness: 2,
-                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            const SizedBox(
+                                                                width: 20),
+                                                            Text(Created_d),
+                                                          ],
+                                                        )
                                                       ],
-                                                    );
-                                                  }).toList(),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    if (!data['noImage'])
+                                                      Center(
+                                                        child: SizedBox(
+                                                            width: 200,
+                                                            child: Image.network(
+                                                                data[
+                                                                    'imageUrl'],
+                                                                fit: BoxFit
+                                                                    .contain)),
+                                                      ),
+                                                    const SizedBox(height: 10),
+                                                    Text(data['content'],
+                                                        style: const TextStyle(
+                                                            fontSize: 15)),
+                                                    const Divider(
+                                                      thickness: 2,
+                                                    ),
+                                                  ],
+                                                );
+                                              }).toList(),
                                             ),
                                           ),
                                         ],
                                       );
                                     })
                               ],
-                              ),
                             ),
+                          ),
                         )
                       ]),
                       Padding(
@@ -439,7 +470,17 @@ class _StoreDetailState extends State<StoreDetail> {
                                 Navigator.pushNamed(
                                   context,
                                   AddReview.routeName,
-                                  arguments: Store_id(data['store_id'], data['latitude'], data['longitude'], data['name'], data['review_count'], data['address_gu'], data['address'], data['phone'], data['image'], data['star_sum']),
+                                  arguments: Store_id(
+                                      data['store_id'],
+                                      data['latitude'],
+                                      data['longitude'],
+                                      data['name'],
+                                      data['review_count'],
+                                      data['address_gu'],
+                                      data['address'],
+                                      data['phone'],
+                                      data['image'],
+                                      data['star_sum']),
                                 );
                               },
                               child: const Icon(
