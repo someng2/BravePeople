@@ -13,19 +13,19 @@ dependencies:
   cupertino_icons: ^1.0.4
 
   firebase_core: ^1.10.0
-#  firebase_core: "^0.7.0"
+  #  firebase_core: "^0.7.0"
 
   firebase_auth: ^3.2.0
-#  firebase_auth: "^0.20.1"
+  #  firebase_auth: "^0.20.1"
 
   cloud_firestore: ^3.1.0
-#  cloud_firestore: ^0.16.0+1
+  #  cloud_firestore: ^0.16.0+1
 
   provider: ^6.0.1
 
-#  google_sign_in: ^5.2.1
+  #  google_sign_in: ^5.2.1
   google_sign_in: ^5.2.1
-#  google_sign_in: "^4.5.1"
+  #  google_sign_in: "^4.5.1"
 
   image_picker: ^0.8.4+4
   path_provider: ^2.0.7
@@ -44,10 +44,11 @@ flutter:
   uses-material-design: true
 
   assets:
-#    - assets/earth.jpeg
+    #    - assets/earth.jpeg
     - assets/heart.jpeg
     - assets/barcode.jpeg
     - assets/earth_smile.png
     - assets/gift.png
     - assets/like.png
     - assets/review.png
+    - assets/map2.png
