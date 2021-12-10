@@ -49,7 +49,7 @@ class _MapPagePageState extends State<MapPage> {
       zoom: 17.9746,
     );
 
-    return new Scaffold(
+    return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
@@ -109,11 +109,11 @@ class _MapPagePageState extends State<MapPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text('$name',style: TextStyle(
-                              color: Colors.white,
+                          Text('$name',style: const TextStyle(
+                              color: Colors.black,
                               fontSize: 14
                           ),),
-                          SizedBox(height: 5,),
+                          const SizedBox(height: 5,),
                           Row(children: <Widget>[
                             if(review_count != 0) Icon(Icons.star,color: Colors.yellow,),
                             SizedBox(width: 10,),
@@ -146,7 +146,7 @@ class _MapPagePageState extends State<MapPage> {
             alignment: Alignment.topRight,
             child: FloatingActionButton(
               backgroundColor: Colors.green,
-                child: Icon(Icons.exit_to_app),
+                child: const Icon(Icons.arrow_drop_down_sharp, size: 30,),
                 onPressed: (){
                   Navigator.pop(context);
                 }),
