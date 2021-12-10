@@ -19,6 +19,16 @@ class StoreDetail extends StatefulWidget {
 
 class _StoreDetailState extends State<StoreDetail> {
 
+
+  Color new_color = Colors.black;
+  bool new_pushed = false;
+
+  Color good_color = Colors.grey;
+  bool good_pushed = true;
+
+  Color bad_color = Colors.grey;
+  bool bad_pushed = false;
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Store_id;
@@ -234,99 +244,190 @@ class _StoreDetailState extends State<StoreDetail> {
                                 ),
 
                                 // third tab bar
-                                StreamBuilder<QuerySnapshot> (
-
-                                    stream: FirebaseFirestore.instance
+                                StreamBuilder<QuerySnapshot>(
+                                    stream: (new_pushed
+                                        ? FirebaseFirestore.instance
                                         .collection('review')
                                         .where('store_id',
                                         isEqualTo: args.store_id)
-                                        .snapshots(),
+                                        .orderBy('created',
+                                        descending: true)
+                                        .snapshots()
+                                        : (good_pushed
+                                        ? FirebaseFirestore.instance
+                                        .collection('review')
+                                        .where('store_id',
+                                        isEqualTo: args.store_id)
+                                        .orderBy('star',
+                                        descending: true)
+                                        .snapshots()
+                                        : FirebaseFirestore.instance
+                                        .collection('review')
+                                        .where('store_id',
+                                        isEqualTo: args.store_id)
+                                        .orderBy('star',
+                                        descending: false)
+                                        .snapshots())),
                                     builder: (BuildContext context,
                                         AsyncSnapshot<QuerySnapshot> snapshot) {
                                       if (snapshot.hasError) {
-                                        return Text('Something went wrong');
+                                        return const Text(
+                                            'Something went wrong');
                                       }
 
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {
-                                        return Text("Loading");
+                                        return const Text("Loading");
                                       }
-                                      return ListView(
-                                        children: snapshot.data!.docs
-                                            .map((DocumentSnapshot document) {
-                                          Map<String, dynamic> data = document
-                                              .data()! as Map<String, dynamic>;
 
-                                          int Created_i =
-                                          int.parse(data['created']);
-                                          var Created_d = DateFormat(
-                                              'yy/MM/dd - HH:mm:ss')
-                                              .format(DateTime
-                                              .fromMillisecondsSinceEpoch(
-                                              Created_i));
-
-                                          return Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                             children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                                children: [
-                                                  ClipOval(
-                                                    child: Image.network('https://st4.depositphotos.com/1156795/20814/v/950/depositphotos_208142514-stock-illustration-profile-placeholder-image-gray-silhouette.jpg',
-                                                      width: 40,
-                                                      height: 40,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(data['nickname']),
-                                                      Row(
-                                                          children: [
-                                                            for(int i = 0; i < data['star']; i++)
-                                                              const Icon(Icons.star_outlined,
-                                                                color: Colors.yellow,
-                                                                size: 22,)
-                                                          ]
-                                                      )
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                    children: [
-                                                      const SizedBox(width: 20),
-                                                      Text(Created_d),
-                                                    ],
-                                                  )
-                                                ],
+                                              TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    new_pushed = true;
+                                                    good_pushed = false;
+                                                    bad_pushed = false;
+                                                  });
+                                                },
+                                                child: Text('최신순',
+                                                    style: TextStyle(
+                                                        color: (new_pushed
+                                                            ? Colors.black
+                                                            : Colors.grey))),
                                               ),
-                                              const SizedBox(height: 10),
-                                              if (!data['noImage'])
-                                                Center(
-                                                  child: Container(
-                                                      width: 200,
-                                                      child: Image.network(
-                                                          data['imageUrl'],
-                                                          fit: BoxFit.contain)
-
-                                                  ),
-
-                                                ),
-                                              const SizedBox(height: 10),
-
-                                              Text(data['content'], style: TextStyle(fontSize: 15)),
-                                              const Divider(thickness: 2,),
-
+                                              TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    good_pushed = true;
+                                                    new_pushed = false;
+                                                    bad_pushed = false;
+                                                  });
+                                                },
+                                                child: Text('별점 높은순',
+                                                    style: TextStyle(
+                                                        color: good_pushed
+                                                            ? Colors.black
+                                                            : Colors.grey)),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    bad_pushed = true;
+                                                    new_pushed = false;
+                                                    good_pushed = false;
+                                                  });
+                                                },
+                                                child: Text('별점 낮은순',
+                                                    style: TextStyle(
+                                                        color: bad_pushed
+                                                            ? Colors.black
+                                                            : Colors.grey)),
+                                              ),
                                             ],
-                                          );
-                                        }).toList(),
+                                          ),
+                                          Expanded(
+                                            child: ListView(
+                                              children: snapshot.data!.docs.map(
+                                                      (DocumentSnapshot document) {
+                                                    Map<String, dynamic> data =
+                                                    document.data()!
+                                                    as Map<String, dynamic>;
+
+                                                    int Created_i =
+                                                    int.parse(data['created']);
+                                                    var Created_d = DateFormat(
+                                                        'yy/MM/dd HH:mm:ss')
+                                                        .format(DateTime
+                                                        .fromMillisecondsSinceEpoch(
+                                                        Created_i));
+
+                                                    return Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                          children: [
+                                                            ClipOval(
+                                                              child: Image.network(
+                                                                'https://st4.depositphotos.com/1156795/20814/v/950/depositphotos_208142514-stock-illustration-profile-placeholder-image-gray-silhouette.jpg',
+                                                                width: 40,
+                                                                height: 40,
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            ),
+                                                            Column(
+                                                              crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                              children: [
+                                                                Text(data[
+                                                                'nickname']),
+                                                                Row(children: [
+                                                                  for (int i = 0;
+                                                                  i <
+                                                                      data[
+                                                                      'star'];
+                                                                  i++)
+                                                                    const Icon(
+                                                                      Icons
+                                                                          .star_outlined,
+                                                                      color: Colors
+                                                                          .yellow,
+                                                                      size: 22,
+                                                                    )
+                                                                ])
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                              children: [
+                                                                const SizedBox(
+                                                                    width: 20),
+                                                                Text(Created_d),
+                                                              ],
+                                                            )
+                                                          ],
+                                                        ),
+                                                        const SizedBox(height: 10),
+                                                        if (!data['noImage'])
+                                                          Center(
+                                                            child: SizedBox(
+                                                                width: 200,
+                                                                child: Image.network(
+                                                                    data[
+                                                                    'imageUrl'],
+                                                                    fit: BoxFit
+                                                                        .contain)),
+                                                          ),
+                                                        const SizedBox(height: 10),
+                                                        Text(data['content'],
+                                                            style: const TextStyle(
+                                                                fontSize: 15)),
+                                                        const Divider(
+                                                          thickness: 2,
+                                                        ),
+                                                      ],
+                                                    );
+                                                  }).toList(),
+                                            ),
+                                          ),
+                                        ],
                                       );
-                                    }),
-                              ]),
-                            ))
+                                    })
+                              ],
+                              ),
+                            ),
+                        )
                       ]),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 20, 20.0),
