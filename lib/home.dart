@@ -152,13 +152,13 @@ class _HomePageState extends State<HomePage> {
                                 // icon: Icon(Icons.thumb_up, size: 60, color: Colors.yellowAccent),
                                 //   child: Image.asset('assets/like.png', height: 90, width: 10),
                                 child: Image.asset('assets/gift.png',
-                                    fit: BoxFit.contain, height: 75),
+                                    fit: BoxFit.contain, height: 70),
                                 onPressed: () {
                                   //나의 리뷰로 가야
                                   Navigator.pushNamed(context, '/coupon');
                                 },
                               ),
-                              const SizedBox(height: 7),
+                              // const SizedBox(height: 7),
                               const Text(
                                 '쿠폰',
                                 textAlign: TextAlign.center,
@@ -176,13 +176,13 @@ class _HomePageState extends State<HomePage> {
                               TextButton(
                                 // padding: const EdgeInsets.fromLTRB(0, 15, 40, 20),
                                 child: Image.asset('assets/favorite.png',
-                                    fit: BoxFit.contain, height: 65),
+                                    fit: BoxFit.contain, height: 70),
                                 onPressed: () {
                                   //찜 목록으로 가야함
                                   Navigator.pushNamed(context, '/favorite');
                                 },
                               ),
-                              const SizedBox(height: 12),
+                              // const SizedBox(height: 12),
                               const Text(
                                 '찜',
                                 textAlign: TextAlign.center,
@@ -202,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                                 // icon: Icon(Icons.thumb_up, size: 60, color: Colors.yellowAccent),
                                 //   child: Image.asset('assets/like.png', height: 90, width: 10),
                                 child: Image.asset('assets/review.png',
-                                    fit: BoxFit.contain, height: 80),
+                                    fit: BoxFit.contain, height: 70),
                                 onPressed: () {
                                   //나의 리뷰로 가야
                                   Navigator.pushNamed(context, '/myReview');
