@@ -238,7 +238,6 @@ class _CommunityCreateState extends State<CommunityCreate> {
   }
 
   Future upload(BuildContext context,String nickname) async {
-
     String created = DateFormat('yyyy-MM-dd-HH:mm').format(DateTime.now());
 
     try {

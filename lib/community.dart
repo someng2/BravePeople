@@ -25,13 +25,12 @@ class _CommunityState extends State<Community> {
 
   final TextEditingController _filter = TextEditingController();
   Icon _searchIcon = const Icon(Icons.search, color: Colors.black);
-  Widget _appBarTitle = Text('Search Example');
+  Widget _appBarTitle = Text('');
   List filteredNames = [];
   List names = [];
   String _searchText = "";
 
   bool searching = false;
-
   bool total = false;
 
   _CommunityState() {
@@ -60,15 +59,6 @@ class _CommunityState extends State<Community> {
     } else
       location = args.address;
 
-    Stream<QuerySnapshot> stream = Firestore.collection("community")
-        .orderBy('created', descending: true)
-        .snapshots();
-    if (args != null)
-      stream = Firestore.collection("community")
-          .orderBy('created', descending: true)
-          .where('address', isEqualTo: location)
-          .snapshots();
-
     if (!(_searchText.isEmpty)) {
       List tempList = [];
       for (int i = 0; i < filteredNames.length; i++) {
@@ -82,38 +72,49 @@ class _CommunityState extends State<Community> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            location + '이야기',
-            style: TextStyle(
-              color: Colors.black,
-            ),
+      appBar: AppBar(
+        title: Text(
+          location + '이야기',
+          style: TextStyle(
+            color: Colors.black,
           ),
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          actions: <Widget>[
-            if (!searching)
-              IconButton(
-                icon: _searchIcon,
-                onPressed: () {
-                  _searchPressed();
-                },
-              ),
-          ],
         ),
-        resizeToAvoidBottomInset: false,
-        body: (searching
-            ? _build('no', location, total, searching, _searchText)
-            : _build('no', location, total, searching, _searchText)));
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: <Widget>[
+          if (!searching)
+            IconButton(
+              icon: _searchIcon,
+              onPressed: () {
+                _searchPressed();
+              },
+            ),
+        ],
+      ),
+      resizeToAvoidBottomInset: false,
+      body: (searching
+          ? _build(location, total, searching, _searchText)
+          : _build(location, total, searching, _searchText)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/communityCreate');
+        },
+        child: const Icon(
+          Icons.edit,
+          color: Color(0xff13740B),
+        ),
+        backgroundColor: const Color(0xffC0E2AF),
+      ),
+    );
   }
 
   void _searchPressed() {
@@ -137,6 +138,7 @@ class _CommunityState extends State<Community> {
       } else {
         _searchIcon = const Icon(Icons.search);
         searching = false;
+        _appBarTitle = const Text('');
         filteredNames = names;
         _filter.clear();
       }
@@ -144,125 +146,108 @@ class _CommunityState extends State<Community> {
   }
 }
 
-Widget _build(String title, String location, bool total, bool searching,
-    String _searchText) {
-  return Column(children: [
-    SizedBox(
-      height: 800,
-      child: StreamBuilder<QuerySnapshot>(
-          stream: total
-              ? (searching
-                  ? (FirebaseFirestore.instance
-                      .collection('community')
-                      .orderBy('created', descending: true)
-                      // .where('name', isEqualTo: _searchText)
-                      .where('content', arrayContains: _searchText)
-                      .snapshots())
-                  : (FirebaseFirestore.instance
-                      .collection('community')
-                      .orderBy('created', descending: true)
-                      .where('title', isEqualTo: title)
-                      .snapshots()))
-              : (searching
-                  ? (FirebaseFirestore.instance
-                      .collection('community')
-                      .orderBy('created', descending: true)
-                      .where('content', arrayContains: _searchText)
-                      .where('address', isEqualTo: location)
-                      .snapshots())
-                  : FirebaseFirestore.instance
-                      .collection('community')
-                      .orderBy('created', descending: true)
-                      .where('title', isEqualTo: title)
-                      .where('address', isEqualTo: location)
-                      .snapshots()),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Text('Something went wrong');
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text("Loading");
-            }
-            return Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xffC0E2AF).withOpacity(0.2),
-                ),
-                // width: 380,
-                margin: const EdgeInsets.fromLTRB(7, 10, 7, 20),
-                padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
-                child: ListView(
-                  children:
-                      snapshot.data!.docs.map((DocumentSnapshot document) {
-                    Map<String, dynamic> data =
-                        document.data()! as Map<String, dynamic>;
-                    return Card(
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        // margin: EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: Color(0xffDBEE91).withOpacity(0.5),
-                          // border: Border.all(width: 10, color: Color(0xffC0E2AF).withOpacity(0.2)),
-                          // borderRadius:
-                          //     const BorderRadius.all(const Radius.circular(8)),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      data["title"],
-                                      style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      data["content"],
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Row(children: [
-                                      Text(data["created"]),
-                                      const SizedBox(width: 60),
-                                      Icon(
-                                        Icons.thumb_up,
-                                        color: Colors.red,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text('${data["like"]}'),
-                                      const SizedBox(width: 20),
-                                      Icon(
-                                        Icons.message,
-                                        color: Colors.blue,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text('${data["comment"]}'),
-                                    ])
-                                  ]),
-                            ),
-                            const SizedBox(width: 20),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    CommunityDetail.routeName,
-                                    arguments: Created(data['created']),
-                                  );
-                                },
-                                icon: const Icon(Icons.navigate_next)),
-                          ],
-                        ),
+Widget _build(String location, bool total, bool searching, String _searchText) {
+  return SizedBox(
+    height: 800,
+    child: StreamBuilder<QuerySnapshot>(
+        stream: total
+            ? (searching
+                ? (FirebaseFirestore.instance
+                    .collection('community')
+                    .orderBy('created', descending: true)
+                    .where('content', arrayContains: _searchText)
+                    .snapshots())
+                : (FirebaseFirestore.instance
+                    .collection('community')
+                    .orderBy('created', descending: true)
+                    .snapshots()))
+            : (searching
+                ? (FirebaseFirestore.instance
+                    .collection('community')
+                    .orderBy('created', descending: true)
+                    .where('content', arrayContains: _searchText)
+                    .where('address', isEqualTo: location)
+                    .snapshots())
+                : (FirebaseFirestore.instance
+                    .collection('community')
+                    .orderBy('created', descending: true)
+                    .where('address', isEqualTo: location)
+                    .snapshots())),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text("Loading");
+          }
+          return ListView(
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+              return Card(
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: Color(0xffDBEE91).withOpacity(0.5),
+                    border: Border.all(
+                        width: 10, color: Color(0xffC0E2AF).withOpacity(0.2)),
+                    borderRadius:
+                        const BorderRadius.all(const Radius.circular(8)),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data["title"],
+                                style: const TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                data["content"],
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              const SizedBox(height: 20),
+                              Row(children: [
+                                Text(data["created"]),
+                                const SizedBox(width: 60),
+                                Icon(
+                                  Icons.thumb_up,
+                                  color: Colors.red,
+                                ),
+                                const SizedBox(width: 8),
+                                Text('${data["like"]}'),
+                                const SizedBox(width: 20),
+                                Icon(
+                                  Icons.message,
+                                  color: Colors.blue,
+                                ),
+                                const SizedBox(width: 8),
+                                Text('${data["comment"]}'),
+                              ])
+                            ]),
                       ),
-                    );
-                  }).toList(),
+                      const SizedBox(width: 20),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              CommunityDetail.routeName,
+                              arguments: Created(data['created']),
+                            );
+                          },
+                          icon: const Icon(Icons.navigate_next)),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
-    ),
-  ]);
+              );
+            }).toList(),
+          );
+        }),
+  );
 }
