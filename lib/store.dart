@@ -85,9 +85,10 @@ class _StoreState extends State<Store> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
                         border: Border.all(
-                            color: const Color(0xffc0e2af),
+                            color: const Color(0xffF6F9D4),
                             style: BorderStyle.solid,
                             width: 4),
+                        color: const Color(0xffF6F9D4),
                       ),
                       height: 10,
                       width: 112,
@@ -96,37 +97,40 @@ class _StoreState extends State<Store> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          DropdownButton<String>(
-                            value: dropdownValue,
-                            icon: const Icon(Icons.arrow_downward,
-                                color: Color(0xffc0e2af)),
-                            iconSize: 22,
-                            style: const TextStyle(color: Colors.black),
-                            alignment: Alignment.center,
-                            underline: Container(),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                dropdownValue = newValue!;
-                                if (dropdownValue == '북구・남구') {
-                                  total = true;
-                                } else {
-                                  total = false;
-                                  if (dropdownValue == '남구') {
-                                    Bukgu = false;
+
+                            DropdownButton<String>(
+                              value: dropdownValue,
+                              icon: const Icon(Icons.arrow_downward),
+
+                              iconSize: 22,
+                              style: const TextStyle(color: Colors.black),
+                              alignment: Alignment.center,
+                              underline: Container(),
+
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                  if (dropdownValue == '북구・남구') {
+                                    total = true;
                                   } else {
-                                    Bukgu = true;
+                                    total = false;
+                                    if (dropdownValue == '남구') {
+                                      Bukgu = false;
+                                    } else {
+                                      Bukgu = true;
+                                    }
                                   }
-                                }
-                              });
-                            },
-                            items: <String>['북구・남구', '북구', '남구']
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Center(child: Text(value)),
-                              );
-                            }).toList(),
-                          ),
+                                });
+                              },
+                              items: <String>['북구・남구', '북구', '남구']
+                                  .map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Center(child: Text(value)),
+                                );
+                              }).toList(),
+                            ),
+
                         ],
                       ),
                     ),
