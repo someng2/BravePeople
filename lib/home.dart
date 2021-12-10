@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+class Username {
+  final String username;
+
+  Username(this.username);
+}
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,6 +16,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    String username = '';
+
+    FirebaseFirestore.instance
+        .collection('user')
+        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        username = doc['nickname'];
+      });
+    });
     final ThemeData theme = Theme.of(context);
     return Scaffold(
       body: SafeArea(
@@ -33,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       icon: Icon(Icons.menu, color: Color(0xff13740B)),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/more');
+                        Navigator.pushNamed(context, '/more', arguments: Username(username));
                       },
                     ),
                   ],
