@@ -189,7 +189,12 @@ class _StoreDetailState extends State<StoreDetail> {
                                       for (int i = 0; i < menu_length; i++)
                                         Row(children: [
                                           SizedBox(
-                                            child: Text(data['menu'][i]),
+                                            child: Row(
+                                              children: [
+                                                const Text('▪︎'),
+                                                Text(data['menu'][i]),
+                                              ],
+                                            ),
                                             width: 200,
                                           ),
                                           //SizedBox(width: 150),
