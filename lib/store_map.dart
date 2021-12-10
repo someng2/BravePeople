@@ -95,7 +95,7 @@ class _MapPagePageState extends State<MapPage> {
           child: Column(
             children: <Widget>[
               Container(
-                color: Colors.blueAccent,
+                color: Color(0xffC0E2AF),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -131,11 +131,11 @@ class _MapPagePageState extends State<MapPage> {
               ),
               SizedBox(height: 20,),
               Row(
-                children: <Widget>[SizedBox(width: 20,),Icon(Icons.map,color: Colors.blue,),SizedBox(width: 20,),Text("$address_gu" + " " +"$address")],
+                children: <Widget>[SizedBox(width: 20,),Icon(Icons.map,color: Color(0xffC0E2AF),),SizedBox(width: 20,),Text("$address_gu" + " " +"$address")],
               ),
               SizedBox(height: 20,),
               Row(
-                children: <Widget>[SizedBox(width: 20,),Icon(Icons.call,color: Colors.blue,),SizedBox(width: 20,),Text("$phone")],
+                children: <Widget>[SizedBox(width: 20,),Icon(Icons.call,color: Color(0xffC0E2AF),),SizedBox(width: 20,),Text("$phone")],
               )
             ],
           ),
@@ -144,8 +144,8 @@ class _MapPagePageState extends State<MapPage> {
           padding: const EdgeInsets.all(8.0),
           child: Align(
             alignment: Alignment.topRight,
-
             child: FloatingActionButton(
+              backgroundColor: Colors.green,
                 child: Icon(Icons.exit_to_app),
                 onPressed: (){
                   Navigator.pop(context);
