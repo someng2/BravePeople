@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'home.dart';
 import 'login.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -12,21 +13,11 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
-  String nickname = '';
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Username;
 
-    FirebaseFirestore.instance
-        .collection('user')
-        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        nickname = doc['nickname'];
-        print('nickname: $nickname');
-      });
-    });
 
     return Scaffold(
       appBar: AppBar(
@@ -69,7 +60,7 @@ class _MorePageState extends State<MorePage> {
                     ),
                     const SizedBox(width: 10),
                     Text(
-                        nickname,
+                        args.username,
                       style: TextStyle(fontSize: 15),
                     ),
                     const SizedBox(width: 10),
