@@ -35,7 +35,6 @@ Future<UserCredential> signInWithGoogle() async {
       'email': userCredential.user!.email,
       'uid': userCredential.user!.uid,
       'nickname': 'echomong',
-      'store_id': '',
       'phone': '',
       'discount': 0,
       'coupon': 0,
