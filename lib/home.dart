@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 30.0),
                 Container(
                   width: 500,
-                  child: Divider(color: Color(0xff13740B), thickness: 2.0),
+                  child: const Divider(color: Color(0xff13740B), thickness: 3.0),
                 ),
                 const SizedBox(height: 16.0),
               ],
