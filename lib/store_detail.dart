@@ -204,72 +204,91 @@ class _StoreDetailState extends State<StoreDetail> {
 
                                 // second tab bar view widget
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.location_on),
-                                        Text(data['address_gu']),
-                                        const Text(' '),
-                                        Text(data['address']),
-                                        const SizedBox(width: 30),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(children: [
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                20,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pushNamed(
-                                              context,
-                                              '/map',
-                                              arguments: Store_id(
-                                                  data['store_id'],
-                                                  data['latitude'],
-                                                  data['longitude'],
-                                                  data['name'],
-                                                  data['review_count'],
-                                                  data['address_gu'],
-                                                  data['address'],
-                                                  data['phone'],
-                                                  data['image'],
-                                                  data['star_sum']),
-                                            );
-                                          },
-                                          // child: const Icon(Icons.map,
-                                          //     color: Color(0xff13740B)),
-                                          child: Stack(children: [
-                                            Image.asset('assets/map2.png',
-                                                fit: BoxFit.fitWidth),
-                                            Positioned(child: Text('지도 보기', style: TextStyle(color: Colors.black.withOpacity(0.4)),), bottom: 15, left: 100)
-                                          ]),
-                                          style: ElevatedButton.styleFrom(
-                                              // shape: const StadiumBorder(),
-                                              primary: Colors.white),
+                                    Expanded(
+                                      child: ListView(children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(Icons.location_on),
+                                                Text(data['address_gu']),
+                                                const Text(' '),
+                                                Text(data['address']),
+                                                const SizedBox(width: 30),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10),
+                                            Row(children: [
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    20,
+                                                height: 50,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.pushNamed(
+                                                      context,
+                                                      '/map',
+                                                      arguments: Store_id(
+                                                          data['store_id'],
+                                                          data['latitude'],
+                                                          data['longitude'],
+                                                          data['name'],
+                                                          data['review_count'],
+                                                          data['address_gu'],
+                                                          data['address'],
+                                                          data['phone'],
+                                                          data['image'],
+                                                          data['star_sum']),
+                                                    );
+                                                  },
+                                                  // child: const Icon(Icons.map,
+                                                  //     color: Color(0xff13740B)),
+                                                  child: Stack(children: [
+                                                    Image.asset('assets/map2.png',
+                                                        fit: BoxFit.fitWidth),
+                                                    Positioned(
+                                                        child: Text(
+                                                          '지도 보기',
+                                                          style: TextStyle(
+                                                              color: Colors.black
+                                                                  .withOpacity(
+                                                                      0.4)),
+                                                        ),
+                                                        bottom: 15,
+                                                        left: 100)
+                                                  ]),
+                                                  style: ElevatedButton.styleFrom(
+                                                      // shape: const StadiumBorder(),
+                                                      primary: Colors.white),
+                                                ),
+                                              ),
+                                            ]),
+                                            const SizedBox(height: 15),
+                                            Row(
+                                              children: [
+                                                const Icon(Icons.access_time),
+                                                Text(data['business_time']),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 20),
+                                            Row(
+                                              children: [
+                                                const Text('* '),
+                                                Flexible(
+                                                  child: Text(
+                                                    data['detail'],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ]),
-                                    const SizedBox(height: 15),
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.access_time),
-                                        Text(data['business_time']),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Row(
-                                      children: [
-                                        const Text('* '),
-                                        Flexible(
-                                          child: Text(
-                                            data['detail'],
-                                          ),
-                                        ),
-                                      ],
+                                      ]),
                                     ),
                                   ],
                                 ),
