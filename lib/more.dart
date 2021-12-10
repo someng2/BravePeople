@@ -12,8 +12,22 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
+  String nickname = '';
+
   @override
   Widget build(BuildContext context) {
+
+    FirebaseFirestore.instance
+        .collection('user')
+        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        nickname = doc['nickname'];
+        print('nickname: $nickname');
+      });
+    });
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -55,7 +69,7 @@ class _MorePageState extends State<MorePage> {
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      '${_auth.currentUser!.email}',
+                        nickname,
                       style: TextStyle(fontSize: 15),
                     ),
                     const SizedBox(width: 10),
