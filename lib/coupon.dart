@@ -19,9 +19,9 @@ class _CouponPageState extends State<CouponPage> {
         stream: FirebaseFirestore.instance
             .collection('user')
             .where(
-              'uid',
-              isEqualTo: FirebaseAuth.instance.currentUser!.uid,
-            )
+          'uid',
+          isEqualTo: FirebaseAuth.instance.currentUser!.uid,
+        )
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -49,7 +49,7 @@ class _CouponPageState extends State<CouponPage> {
               body: ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
+                  document.data()! as Map<String, dynamic>;
 
                   return Column(children: [
                     Center(
@@ -58,9 +58,9 @@ class _CouponPageState extends State<CouponPage> {
                             width: 100,
                             decoration: BoxDecoration(
                               border:
-                                  Border.all(color: Colors.yellow, width: 4),
+                              Border.all(color: Colors.yellow, width: 4),
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(
+                              const BorderRadius.all(Radius.circular(
                                 5.0,
                               )),
                             ),
@@ -165,19 +165,19 @@ class _CouponPageState extends State<CouponPage> {
                                     child: (data['coupon'] < 1)
                                         ? const SizedBox(height: 30)
                                         : Image.asset('assets/earth_smile.png',
-                                            fit: BoxFit.contain),
+                                        fit: BoxFit.contain),
                                     flex: 1),
                                 Expanded(
                                     child: (data['coupon'] < 2)
                                         ? const SizedBox(height: 30)
                                         : Image.asset('assets/earth_smile.png',
-                                            fit: BoxFit.contain),
+                                        fit: BoxFit.contain),
                                     flex: 1),
                                 Expanded(
                                     child: (data['coupon'] < 3)
                                         ? const SizedBox(height: 30)
                                         : Image.asset('assets/earth_smile.png',
-                                            fit: BoxFit.contain),
+                                        fit: BoxFit.contain),
                                     flex: 1),
                               ]),
                         ),
@@ -229,13 +229,13 @@ class _CouponPageState extends State<CouponPage> {
                                     flex: 1),
                                 Expanded(
                                     child:
-                                        Column(
-                                          children: [
-                                            Image.asset('assets/gift.png',
+                                    Column(
+                                      children: [
+                                        Image.asset('assets/gift.png',
                                             height: 67),
-                                            const Text('10% 할인권', style: TextStyle(fontSize: 16))
-                                          ],
-                                        ),
+                                        const Text('10% 할인권', style: TextStyle(fontSize: 16))
+                                      ],
+                                    ),
                                     flex: 1),
                               ]),
                         ),

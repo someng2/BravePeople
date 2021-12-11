@@ -80,19 +80,19 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       IconButton(
                         padding: EdgeInsets.fromLTRB(20, 10, 75, 0),
-                          icon: Icon(Icons.restaurant, size: 80),
-                          onPressed: () {
-                            //제휴점으로 가야함
-                            Navigator.pushNamed(context, '/store');
-                          },
+                        icon: Icon(Icons.restaurant, size: 80),
+                        onPressed: () {
+                          //제휴점으로 가야함
+                          Navigator.pushNamed(context, '/store');
+                        },
                       ),
                       const SizedBox(height: 90.0),
                       const SizedBox(width: 120.0),
                       const Text('제휴점',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 25,
-                          ),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 25,
+                        ),
                       ),
                       const SizedBox(height: 10.0),
                     ],
@@ -109,11 +109,11 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       IconButton(
                         padding: EdgeInsets.fromLTRB(20, 10, 75, 0),
-                          icon: Icon(Icons.people, size: 80, color: Colors.pinkAccent),
-                          onPressed: () {
-                            //커뮤니티로 가야함
-                            Navigator.pushNamed(context, '/communityMain');
-                          },
+                        icon: Icon(Icons.people, size: 80, color: Colors.pinkAccent),
+                        onPressed: () {
+                          //커뮤니티로 가야함
+                          Navigator.pushNamed(context, '/communityMain');
+                        },
                       ),
                       const SizedBox(height: 90.0),
                       const SizedBox(width: 120.0),

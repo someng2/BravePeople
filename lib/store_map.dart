@@ -145,7 +145,7 @@ class _MapPagePageState extends State<MapPage> {
           child: Align(
             alignment: Alignment.topRight,
             child: FloatingActionButton(
-              backgroundColor: Colors.green,
+                backgroundColor: Colors.green,
                 child: const Icon(Icons.arrow_drop_down_sharp, size: 30,),
                 onPressed: (){
                   Navigator.pop(context);
