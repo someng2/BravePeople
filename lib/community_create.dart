@@ -15,7 +15,7 @@ class CommunityCreate extends StatefulWidget {
 class _CommunityCreateState extends State<CommunityCreate> {
   FirebaseFirestore Firestore = FirebaseFirestore.instance;
 
-  final String like = '0';
+  final int like = 0;
   String nickname = '';
 
   final FirebaseAuth auth = FirebaseAuth.instance;

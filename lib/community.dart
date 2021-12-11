@@ -24,6 +24,7 @@ class _CommunityState extends State<Community> {
   TextEditingController _filter = TextEditingController();
   Icon _searchIcon = const Icon(Icons.search, color: Colors.black);
   Widget _appBarTitle = Text('');
+
   List filteredNames = [];
   List names = [];
   String _searchText = "";
@@ -51,24 +52,11 @@ class _CommunityState extends State<Community> {
     final args = ModalRoute.of(context)!.settings.arguments as Address;
 
     String location;
-
     if (args == null) {
       location = '포항';
       total = true;
     } else
       location = args.address;
-
-    if (!(_searchText.isEmpty)) {
-      List tempList = [];
-      for (int i = 0; i < filteredNames.length; i++) {
-        if (filteredNames[i]['content']
-            .toLowerCase()
-            .contains(_searchText.toLowerCase())) {
-          tempList.add(filteredNames[i]);
-        }
-      }
-      filteredNames = tempList;
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -93,12 +81,12 @@ class _CommunityState extends State<Community> {
             Navigator.pop(context);
           },
         ),
-        actions: <Widget>[
-          if (!searching)
+        actions: [
             IconButton(
               icon: _searchIcon,
+              color: Colors.black,
               onPressed: () {
-                _searchPressed(location);
+                _searchPressed();
               },
             ),
         ],
@@ -122,10 +110,9 @@ class _CommunityState extends State<Community> {
     );
   }
 
-  void _searchPressed(String location) {
+  void _searchPressed() {
     setState(() {
       if (_searchIcon.icon == Icons.search) {
-        searching = true;
         _searchIcon = const Icon(Icons.close);
         _appBarTitle = TextField(
           controller: _filter,
@@ -140,15 +127,10 @@ class _CommunityState extends State<Community> {
             ),
           ),
         );
+        searching = true;
       } else {
         _searchIcon = const Icon(Icons.search);
         searching = false;
-        _appBarTitle = Text(
-          location + '이야기',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        );
         filteredNames = names;
         _filter.clear();
       }
@@ -157,6 +139,9 @@ class _CommunityState extends State<Community> {
 }
 
 Widget _build(String location, bool total, bool searching, String _searchText) {
+
+  if(searching == true)
+  print(_searchText);
   return SizedBox(
     height: 800,
     child: StreamBuilder<QuerySnapshot>(
