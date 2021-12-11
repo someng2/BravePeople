@@ -85,8 +85,9 @@ class _AnouncementPageState extends State<AnouncementPage> {
                                 ),
                               ),
                             ),
-                            //Divider(height: 3,color: Colors.grey,),
+
                           ]),
+                      const Divider(height: 3,color: Colors.grey,),
                     ],
                   ),
                 );
