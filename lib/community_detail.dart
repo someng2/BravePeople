@@ -230,7 +230,7 @@ class _CommunityDetailState extends State<CommunityDetail> {
                 stream: FirebaseFirestore.instance
                     .collection('comment')
                     .where('title', isEqualTo: title)
-                    .orderBy('created', descending: false)
+                    .orderBy('created', descending: true)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {

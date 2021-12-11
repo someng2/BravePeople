@@ -39,6 +39,7 @@ class _CommunityMainState extends State<CommunityMain> {
             Navigator.pop(context);
           },
         ),
+        elevation: 0,
       ),
       body: Column(
         children: [
@@ -112,7 +113,7 @@ class _CommunityMainState extends State<CommunityMain> {
                                         children: [
                                           SizedBox(
                                               width: 200, child: Text(data['title'], style: const TextStyle(fontSize: 17),)),
-                                          const SizedBox(width: 30),
+                                          const SizedBox(width: 15),
                                           const Icon(
                                             Icons.thumb_up,
                                             size: 20,
@@ -191,7 +192,7 @@ class _CommunityMainState extends State<CommunityMain> {
                                         children: [
                                           SizedBox(
                                               width: 200, child: Text(data['title'], style: const TextStyle(fontSize: 17))),
-                                          const SizedBox(width: 30),
+                                          const SizedBox(width: 15),
                                           Icon(
                                             Icons.thumb_up,
                                             size: 20,
@@ -270,7 +271,7 @@ class _CommunityMainState extends State<CommunityMain> {
                                         children: [
                                           SizedBox(
                                               width: 200, child: Text(data['title'], style: const TextStyle(fontSize: 17))),
-                                          const SizedBox(width: 30),
+                                          const SizedBox(width: 15),
                                           Icon(
                                             Icons.thumb_up,
                                             size: 20,

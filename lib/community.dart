@@ -81,6 +81,7 @@ class _CommunityState extends State<Community> {
                 ),
               )
         ),
+        elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
         leading: IconButton(
