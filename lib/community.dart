@@ -21,9 +21,7 @@ class Community extends StatefulWidget {
 class _CommunityState extends State<Community> {
   FirebaseFirestore Firestore = FirebaseFirestore.instance;
 
-  TextEditingController searchController = TextEditingController();
-
-  final TextEditingController _filter = TextEditingController();
+  TextEditingController _filter = TextEditingController();
   Icon _searchIcon = const Icon(Icons.search, color: Colors.black);
   Widget _appBarTitle = Text('');
   List filteredNames = [];
@@ -53,6 +51,7 @@ class _CommunityState extends State<Community> {
     final args = ModalRoute.of(context)!.settings.arguments as Address;
 
     String location;
+
     if (args == null) {
       location = '포항';
       total = true;
@@ -62,7 +61,7 @@ class _CommunityState extends State<Community> {
     if (!(_searchText.isEmpty)) {
       List tempList = [];
       for (int i = 0; i < filteredNames.length; i++) {
-        if (filteredNames[i]['name']
+        if (filteredNames[i]['content']
             .toLowerCase()
             .contains(_searchText.toLowerCase())) {
           tempList.add(filteredNames[i]);
@@ -73,14 +72,17 @@ class _CommunityState extends State<Community> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          location + '이야기',
-          style: TextStyle(
-            color: Colors.black,
-          ),
+        title: (searching
+            ? _appBarTitle
+            : Text(
+                location + '이야기',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              )
         ),
-        backgroundColor: Colors.white,
         centerTitle: true,
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -95,7 +97,7 @@ class _CommunityState extends State<Community> {
             IconButton(
               icon: _searchIcon,
               onPressed: () {
-                _searchPressed();
+                _searchPressed(location);
               },
             ),
         ],
@@ -104,20 +106,22 @@ class _CommunityState extends State<Community> {
       body: (searching
           ? _build(location, total, searching, _searchText)
           : _build(location, total, searching, _searchText)),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/communityCreate');
-        },
-        child: const Icon(
-          Icons.edit,
-          color: Color(0xff13740B),
-        ),
-        backgroundColor: const Color(0xffC0E2AF),
-      ),
+      floatingActionButton: (searching
+          ? null
+          : FloatingActionButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/communityCreate');
+              },
+              child: const Icon(
+                Icons.edit,
+                color: Color(0xff13740B),
+              ),
+              backgroundColor: const Color(0xffC0E2AF),
+            )),
     );
   }
 
-  void _searchPressed() {
+  void _searchPressed(String location) {
     setState(() {
       if (_searchIcon.icon == Icons.search) {
         searching = true;
@@ -126,7 +130,7 @@ class _CommunityState extends State<Community> {
           controller: _filter,
           decoration: const InputDecoration(
             prefixIcon: Icon(Icons.search, color: Color(0xffc0e2af)),
-            hintText: '게시글 검색',
+            hintText: '게시글 내용 검색',
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Color(0xffc0e2af), width: 2),
             ),
@@ -138,7 +142,12 @@ class _CommunityState extends State<Community> {
       } else {
         _searchIcon = const Icon(Icons.search);
         searching = false;
-        _appBarTitle = const Text('');
+        _appBarTitle = Text(
+          location + '이야기',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        );
         filteredNames = names;
         _filter.clear();
       }

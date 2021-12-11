@@ -136,7 +136,7 @@ class _CommunityCreateState extends State<CommunityCreate> {
                     filled: true,
                     fillColor: Color(0xffDBEE91),
                     contentPadding: const EdgeInsets.only(
-                        left: 14.0, bottom: 100.0, top: 100.0),
+                        left: 14.0, bottom: 50.0, top: 50.0),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Color(0xffDBEE91),
@@ -150,6 +150,7 @@ class _CommunityCreateState extends State<CommunityCreate> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
+                  maxLines: null,
                   controller: contentController,
                   onChanged: (value) {
                     setState(() {

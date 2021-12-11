@@ -159,7 +159,7 @@ class _CommunityDetailState extends State<CommunityDetail> {
                                               fontWeight: FontWeight.bold)),
                                       const SizedBox(height: 20),
                                       Text(data['content']),
-                                      const SizedBox(height: 100),
+                                      const SizedBox(height: 50),
                                       if(data['noImage'] == false)
                                         Image.network(
                                           data['imageUrl'],
