@@ -44,9 +44,9 @@ class _MapPagePageState extends State<MapPage> {
         },
         position: LatLng(args.latitude, args.longitude)));
 
-    CameraPosition _kGooglePlex = CameraPosition(
+    CameraPosition storePosition = CameraPosition(
       target: LatLng(args.latitude, args.longitude),
-      zoom: 17.9746,
+      zoom: 17.9946,
     );
 
     return Scaffold(
@@ -74,7 +74,7 @@ class _MapPagePageState extends State<MapPage> {
       body: GoogleMap(
         mapType: MapType.normal,
         markers: Set.from(_markers),
-        initialCameraPosition: _kGooglePlex,
+        initialCameraPosition: storePosition,
         myLocationEnabled :true,
         myLocationButtonEnabled: true,
         onMapCreated: (GoogleMapController controller) {
