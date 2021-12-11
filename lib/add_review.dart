@@ -94,221 +94,221 @@ class _AddReviewState extends State<AddReview> {
               ),
               body: ListView(
                   children:
-                  snapshot.data!.docs.map((DocumentSnapshot document) {
-                    Map<String, dynamic> data =
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
-                    return Column(
-                      children: [
-                        Text(
-                          data['name'],
-                          style: const TextStyle(fontSize: 30),
-                        ),
-                        const SizedBox(height: 20),
-                        const Divider(
-                          thickness: 2,
-                        ),
-                        Row(
-                          children: const [
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Text('별점', style: TextStyle(fontSize: 17)),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                                icon: const Icon(
-                                  Icons.star,
-                                  size: 40,
-                                ),
-                                color: Colors.yellow,
-                                onPressed: () {
-                                  setState(() {
-                                    star_count = 1;
-                                  });
-                                }),
-                            IconButton(
-                                icon: (star_count >= 2
-                                    ? const Icon(
-                                  Icons.star,
-                                  size: 40,
-                                )
-                                    : const Icon(
-                                  Icons.star_outline_outlined,
-                                  size: 40,
-                                )),
-                                color: Colors.yellow,
-                                onPressed: () {
-                                  _toggleStar(star2, 2);
-                                }),
-                            IconButton(
-                                icon: (star_count >= 3
-                                    ? const Icon(
-                                  Icons.star,
-                                  size: 40,
-                                )
-                                    : const Icon(
-                                  Icons.star_outline_outlined,
-                                  size: 40,
-                                )),
-                                color: Colors.yellow,
-                                onPressed: () {
-                                  _toggleStar(star3, 3);
-                                }),
-                            IconButton(
-                                icon: (star_count >= 4
-                                    ? const Icon(
-                                  Icons.star,
-                                  size: 40,
-                                )
-                                    : const Icon(
-                                  Icons.star_outline_outlined,
-                                  size: 40,
-                                )),
-                                color: Colors.yellow,
-                                onPressed: () {
-                                  _toggleStar(star4, 4);
-                                }),
-                            IconButton(
-                                icon: (star_count == 5
-                                    ? const Icon(
-                                  Icons.star,
-                                  size: 40,
-                                )
-                                    : const Icon(
-                                  Icons.star_outline_outlined,
-                                  size: 40,
-                                )),
-                                color: Colors.yellow,
-                                onPressed: () {
-                                  _toggleStar(star5, 5);
-                                }),
-                          ],
-                        ),
-                        // Text('star count: $star_count'),
-                        const SizedBox(height: 30),
+                return Column(
+                  children: [
+                    Text(
+                      data['name'],
+                      style: const TextStyle(fontSize: 30),
+                    ),
+                    const SizedBox(height: 20),
+                    const Divider(
+                      thickness: 2,
+                    ),
+                    Row(
+                      children: const [
                         SizedBox(
-                          width: 300,
-                          child: TextField(
-                            // inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[ㄱ-ㅎ|가-힣|ㆍ|ᆢ'))],
-                            controller: _textcontroller,
-                            maxLines: 6,
-                            decoration: InputDecoration(
-                              // hintText: '리뷰 10자 이상 작성해 주세요 :)',
-                              isDense: true,
-                              filled: true,
-                              fillColor: const Color(0xffDBEE91).withOpacity(0.3),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
-                                  borderSide: BorderSide(
-                                      color:
-                                      const Color(0xffDBEE91).withOpacity(0.3),
-                                      width: 2)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
-                                  borderSide: BorderSide(
-                                      color:
-                                      const Color(0xffDBEE91).withOpacity(0.3),
-                                      width: 2)),
-                            ),
-                          ),
+                          width: 30,
                         ),
-                        const SizedBox(height: 30),
-                        Row(
-                          children: const [
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Text('사진', style: TextStyle(fontSize: 17)),
-                          ],
-                        ),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(width: 30),
-                            SizedBox(
-                              width: 100,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: const Color(0xffDBEE91).withOpacity(0.8),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  getImage();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: Row(children: const [
-                                    Icon(
-                                      Icons.camera_alt,
-                                      color: Colors.black,
-                                    ),
-                                    Text(' 선택',
-                                        style: TextStyle(color: Colors.black))
-                                  ]),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 25),
-                            (noImage)
-                                ? Container(
-                              width: 200,
-                              height: 200,
-                            )
-                                : Container(
-                              child: Image.file(_image, fit: BoxFit.contain),
-                              width: 200,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 3,
-                                    color: const Color(0xffDBEE91)
-                                        .withOpacity(0.5)),
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(8)),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.all(30.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: const Color(0xffC0E2AF),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  upload(context, args.store_id,
-                                      _textcontroller.text, star_count, nickname);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(children: const [
-                                    Icon(Icons.edit, color: Color(0xff13740B)),
-                                    Text(' 게시하기',
-                                        style: TextStyle(color: Colors.black))
-                                  ]),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        Text('별점', style: TextStyle(fontSize: 17)),
                       ],
-                    );
-                  }).toList()));
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            icon: const Icon(
+                              Icons.star,
+                              size: 40,
+                            ),
+                            color: Colors.yellow,
+                            onPressed: () {
+                              setState(() {
+                                star_count = 1;
+                              });
+                            }),
+                        IconButton(
+                            icon: (star_count >= 2
+                                ? const Icon(
+                                    Icons.star,
+                                    size: 40,
+                                  )
+                                : const Icon(
+                                    Icons.star_outline_outlined,
+                                    size: 40,
+                                  )),
+                            color: Colors.yellow,
+                            onPressed: () {
+                              _toggleStar(star2, 2);
+                            }),
+                        IconButton(
+                            icon: (star_count >= 3
+                                ? const Icon(
+                                    Icons.star,
+                                    size: 40,
+                                  )
+                                : const Icon(
+                                    Icons.star_outline_outlined,
+                                    size: 40,
+                                  )),
+                            color: Colors.yellow,
+                            onPressed: () {
+                              _toggleStar(star3, 3);
+                            }),
+                        IconButton(
+                            icon: (star_count >= 4
+                                ? const Icon(
+                                    Icons.star,
+                                    size: 40,
+                                  )
+                                : const Icon(
+                                    Icons.star_outline_outlined,
+                                    size: 40,
+                                  )),
+                            color: Colors.yellow,
+                            onPressed: () {
+                              _toggleStar(star4, 4);
+                            }),
+                        IconButton(
+                            icon: (star_count == 5
+                                ? const Icon(
+                                    Icons.star,
+                                    size: 40,
+                                  )
+                                : const Icon(
+                                    Icons.star_outline_outlined,
+                                    size: 40,
+                                  )),
+                            color: Colors.yellow,
+                            onPressed: () {
+                              _toggleStar(star5, 5);
+                            }),
+                      ],
+                    ),
+                    // Text('star count: $star_count'),
+                    const SizedBox(height: 30),
+                    SizedBox(
+                      width: 300,
+                      child: TextField(
+                        // inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[ㄱ-ㅎ|가-힣|ㆍ|ᆢ'))],
+                        controller: _textcontroller,
+                        maxLines: 6,
+                        decoration: InputDecoration(
+                          // hintText: '리뷰 10자 이상 작성해 주세요 :)',
+                          isDense: true,
+                          filled: true,
+                          fillColor: const Color(0xffDBEE91).withOpacity(0.3),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                              borderSide: BorderSide(
+                                  color:
+                                      const Color(0xffDBEE91).withOpacity(0.3),
+                                  width: 2)),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                              borderSide: BorderSide(
+                                  color:
+                                      const Color(0xffDBEE91).withOpacity(0.3),
+                                  width: 2)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      children: const [
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Text('사진', style: TextStyle(fontSize: 17)),
+                      ],
+                    ),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(width: 30),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: const Color(0xffDBEE91).withOpacity(0.8),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              getImage();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Row(children: const [
+                                Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.black,
+                                ),
+                                Text(' 선택',
+                                    style: TextStyle(color: Colors.black))
+                              ]),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 25),
+                        (noImage)
+                            ? Container(
+                                width: 200,
+                                height: 200,
+                              )
+                            : Container(
+                                child: Image.file(_image, fit: BoxFit.contain),
+                                width: 200,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 3,
+                                      color: const Color(0xffDBEE91)
+                                          .withOpacity(0.5)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(8)),
+                                ),
+                              ),
+                      ],
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: const Color(0xffC0E2AF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              upload(context, args.store_id,
+                                  _textcontroller.text, star_count, nickname);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: const [
+                                Icon(Icons.edit, color: Color(0xff13740B)),
+                                Text(' 게시하기',
+                                    style: TextStyle(color: Colors.black))
+                              ]),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }).toList()));
         });
   }
 
@@ -327,7 +327,6 @@ class _AddReviewState extends State<AddReview> {
     print(FirebaseAuth.instance.currentUser!.uid);
 
     try {
-
       // 스토리지에 업로드할 파일 경로
       final firebaseStorageRef = FirebaseStorage.instance
           .ref()
@@ -357,6 +356,13 @@ class _AddReviewState extends State<AddReview> {
           'store_name': store_name,
           'store_image': store_image,
         });
+        await FirebaseFirestore.instance
+            .collection('store')
+            .doc('$store_id')
+            .update({
+          'review_count': FieldValue.increment(1),
+          'star_sum': FieldValue.increment(star_count)
+        });
       } else {
         // print('nickname_: $nickname');
         await FirebaseFirestore.instance.collection('review').doc('$time').set({
@@ -370,6 +376,13 @@ class _AddReviewState extends State<AddReview> {
           'email': FirebaseAuth.instance.currentUser!.email,
           'store_name': store_name,
           'store_image': store_image,
+        });
+        await FirebaseFirestore.instance
+            .collection('store')
+            .doc('$store_id')
+            .update({
+          'review_count': FieldValue.increment(1),
+          'star_sum': FieldValue.increment(star_count)
         });
       }
     } catch (e) {
