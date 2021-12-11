@@ -187,24 +187,32 @@ class _StoreDetailState extends State<StoreDetail> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       for (int i = 0; i < menu_length; i++)
-                                        Row(children: [
-                                          SizedBox(
-                                            child: Row(
-                                              children: [
-                                                const Text('▪︎'),
-                                                Text(data['menu'][i]),
-                                              ],
-                                            ),
-                                            width: 200,
-                                          ),
-                                          //SizedBox(width: 150),
-                                          Row(
-                                            children: [
-                                              Text(data['price'][i]),
-                                              const Text('원')
-                                            ],
-                                          ),
-                                        ]),
+                                        Column(
+                                          children: [
+                                            Row(children: [
+                                              SizedBox(
+                                                width: 170,
+                                                child: Row(
+                                                  children: [
+                                                    const Text('▪︎'),
+                                                    Text(
+                                                      data['menu'][i],
+                                                      // softWrap: true,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Row(children: [
+                                                Text(
+                                                  data['price'][i],
+                                                  softWrap: true,
+                                                ),
+                                                const Text('원')
+                                              ]),
+                                            ]),
+                                            SizedBox(height: 10),
+                                          ],
+                                        )
                                     ]),
 
                                 // second tab bar view widget
@@ -254,13 +262,15 @@ class _StoreDetailState extends State<StoreDetail> {
                                                   // child: const Icon(Icons.map,
                                                   //     color: Color(0xff13740B)),
                                                   child: Stack(children: [
-                                                    Image.asset('assets/map2.png',
+                                                    Image.asset(
+                                                        'assets/map2.png',
                                                         fit: BoxFit.fitWidth),
                                                     Positioned(
                                                         child: Text(
                                                           '지도 보기',
                                                           style: TextStyle(
-                                                              color: Colors.black
+                                                              color: Colors
+                                                                  .black
                                                                   .withOpacity(
                                                                       0.4)),
                                                         ),
