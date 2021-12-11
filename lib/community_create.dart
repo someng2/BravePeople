@@ -178,7 +178,7 @@ class _CommunityCreateState extends State<CommunityCreate> {
                           Text(
                             "선택",
                             style:
-                                TextStyle(color: Colors.black.withOpacity(0.8)),
+                            TextStyle(color: Colors.black.withOpacity(0.8)),
                           ),
                         ],
                       )),

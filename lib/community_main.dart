@@ -64,7 +64,7 @@ class _CommunityMainState extends State<CommunityMain> {
                       decoration: BoxDecoration(
                         color: Color(0xffDBEE91).withOpacity(0.5),
                         borderRadius:
-                            const BorderRadius.all(const Radius.circular(8)),
+                        const BorderRadius.all(const Radius.circular(8)),
                       ),
                       child: Column(
                         children: [
@@ -107,7 +107,7 @@ class _CommunityMainState extends State<CommunityMain> {
                                     children: snapshot.data!.docs
                                         .map((DocumentSnapshot document) {
                                       Map<String, dynamic> data =
-                                          document.data()! as Map<String, dynamic>;
+                                      document.data()! as Map<String, dynamic>;
 
                                       return Row(
                                         children: [
@@ -139,7 +139,7 @@ class _CommunityMainState extends State<CommunityMain> {
                       decoration: BoxDecoration(
                         color: Color(0xffDBEE91).withOpacity(0.5),
                         borderRadius:
-                            const BorderRadius.all(const Radius.circular(8)),
+                        const BorderRadius.all(const Radius.circular(8)),
                       ),
                       child: Column(
                         children: [
@@ -186,7 +186,7 @@ class _CommunityMainState extends State<CommunityMain> {
                                     children: snapshot.data!.docs
                                         .map((DocumentSnapshot document) {
                                       Map<String, dynamic> data =
-                                          document.data()! as Map<String, dynamic>;
+                                      document.data()! as Map<String, dynamic>;
 
                                       return Row(
                                         children: [
@@ -218,7 +218,7 @@ class _CommunityMainState extends State<CommunityMain> {
                       decoration: BoxDecoration(
                         color: Color(0xffDBEE91).withOpacity(0.5),
                         borderRadius:
-                            const BorderRadius.all(const Radius.circular(8)),
+                        const BorderRadius.all(const Radius.circular(8)),
                       ),
                       child: Column(
                         children: [
@@ -265,7 +265,7 @@ class _CommunityMainState extends State<CommunityMain> {
                                     children: snapshot.data!.docs
                                         .map((DocumentSnapshot document) {
                                       Map<String, dynamic> data =
-                                          document.data()! as Map<String, dynamic>;
+                                      document.data()! as Map<String, dynamic>;
 
                                       return Row(
                                         children: [
