@@ -9,10 +9,8 @@ class AnouncementPage extends StatefulWidget {
 }
 
 class _AnouncementPageState extends State<AnouncementPage> {
-
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('announcement')
@@ -29,7 +27,8 @@ class _AnouncementPageState extends State<AnouncementPage> {
           return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: const Text('공지사항',
+                title: const Text(
+                  '공지사항',
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -38,60 +37,60 @@ class _AnouncementPageState extends State<AnouncementPage> {
                 leading: IconButton(
                   icon: const Icon(
                     Icons.arrow_back,
-                    color: Colors.grey,
+                    color: Colors.black,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
-                elevation: 0,
+                elevation: 2,
               ),
               body: ListView(
                   children:
-                  snapshot.data!.docs.map((DocumentSnapshot document) {
-                    Map<String, dynamic> data =
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
-                    return SafeArea(
-                      child: Column(
-                        children: <Widget> [
-                          ExpansionTile(
-                              title: new Text(data['title'],
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.black
+                return SafeArea(
+                  child: Column(
+                    children: <Widget>[
+                      ExpansionTile(
+                          title: Text(
+                            data['title'],
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.black),
+                          ),
+                          initiallyExpanded: false,
+                          backgroundColor: Colors.white,
+                          children: <Widget>[
+                            //Divider(height: 3,color: Colors.grey,),
+                            Container(
+                              constraints: BoxConstraints(
+                                maxHeight: double.infinity,
+                              ),
+                              width: 300,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 0),
+                                child: Wrap(
+                                  children: [
+                                    Text(
+                                      data['message'],
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              initiallyExpanded: false,
-                              backgroundColor: Colors.white,
-                              children: <Widget>[
-                                //Divider(height: 3,color: Colors.grey,),
-                                Container(
-                                  constraints: BoxConstraints(
-                                    maxHeight: double.infinity,
-                                  ),
-                                  width: 300,
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 0),
-                                    child: Wrap(
-                                      children: [
-                                        Text(data['message'],
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                //Divider(height: 3,color: Colors.grey,),
-                              ]
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList()));
+                            ),
+                            //Divider(height: 3,color: Colors.grey,),
+                          ]),
+                    ],
+                  ),
+                );
+              }).toList()));
         });
   }
 }
