@@ -13,11 +13,9 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
-
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Username;
-
 
     return Scaffold(
       appBar: AppBar(
@@ -58,103 +56,31 @@ class _MorePageState extends State<MorePage> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 20),
                     Text(
-                        args.username,
+                      args.username,
                       style: TextStyle(fontSize: 15),
                     ),
-                    const SizedBox(width: 10),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        //mypage 정보 수정으로 가야함
-                        Navigator.pushNamed(context, '/mypage');
-                      },
+                    const SizedBox(width: 50),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            //mypage 정보 수정으로 가야함
+                            Navigator.pushNamed(context, '/mypage');
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Divider(color: Colors.grey, thickness: 1.0),
-                // Divider(color: Color(0xffC0E2AF).withOpacity(0.2), thickness: 10.0),
-                // Row(
-                //   children: <Widget>[
-                //     // const SizedBox(width: 40.0),
-                //     Column(
-                //       children: <Widget>[
-                //         IconButton(
-                //           padding: EdgeInsets.fromLTRB(20, 15, 60, 20),
-                //           icon: Icon(Icons.wallet_giftcard,
-                //               size: 60, color: Colors.lightBlueAccent),
-                //           onPressed: () {
-                //             //쿠폰으로 가야
-                //             Navigator.pushNamed(context, '/coupon');
-                //           },
-                //         ),
-                //         const SizedBox(height: 20.0),
-                //         Text(
-                //           '쿠폰',
-                //           textAlign: TextAlign.center,
-                //           style: TextStyle(
-                //             fontSize: 15,
-                //           ),
-                //         ),
-                //         const SizedBox(height: 10.0),
-                //       ],
-                //     ),
-                //     const SizedBox(width: 30.0),
-                //     Column(
-                //       children: <Widget>[
-                //         IconButton(
-                //           padding: EdgeInsets.fromLTRB(0, 15, 40, 20),
-                //           icon:
-                //               Icon(Icons.favorite, size: 60, color: Colors.red),
-                //           onPressed: () {
-                //             //찜 목록으로 가야함
-                //             Navigator.pushNamed(context, '/favorite');
-                //           },
-                //         ),
-                //         const SizedBox(height: 20.0),
-                //         Text(
-                //           '찜',
-                //           textAlign: TextAlign.center,
-                //           style: TextStyle(
-                //             fontSize: 15,
-                //           ),
-                //         ),
-                //         const SizedBox(height: 10.0),
-                //       ],
-                //     ),
-                //     const SizedBox(width: 20.0),
-                //     Column(
-                //       children: <Widget>[
-                //         Container(
-                //           height: 90,
-                //           // child: TextButton(
-                //           //   // padding: EdgeInsets.fromLTRB(30, 15, 50, 20),
-                //           //   // icon: Icon(Icons.thumb_up, size: 60, color: Colors.yellowAccent),
-                //           //   child: Image.asset('assets/like.png', height: 90, width: 10),
-                //           //   onPressed: () {
-                //           //     //나의 리뷰로 가야
-                //           //     Navigator.pushNamed(context, '/myReview');
-                //           //   },
-                //           // ),
-                //         ),
-                //         // const SizedBox(height: 20.0),
-                //         Text(
-                //           '나의 리뷰',
-                //           textAlign: TextAlign.center,
-                //           style: TextStyle(
-                //             fontSize: 15,
-                //           ),
-                //         ),
-                //         // const SizedBox(height: 10.0),
-                //       ],
-                //     ),
-                //   ],
-                // ),
                 Center(
                   child: SizedBox(
                     height: 120,
@@ -170,13 +96,13 @@ class _MorePageState extends State<MorePage> {
                                   // icon: Icon(Icons.thumb_up, size: 60, color: Colors.yellowAccent),
                                   //   child: Image.asset('assets/like.png', height: 90, width: 10),
                                   child: Image.asset('assets/gift.png',
-                                      fit: BoxFit.contain, height: 75),
+                                      fit: BoxFit.contain, height: 73),
                                   onPressed: () {
                                     //나의 리뷰로 가야
                                     Navigator.pushNamed(context, '/coupon');
                                   },
                                 ),
-                                const SizedBox(height: 7),
+                                // const SizedBox(height: 5),
                                 const Text(
                                   '쿠폰',
                                   textAlign: TextAlign.center,
@@ -194,13 +120,12 @@ class _MorePageState extends State<MorePage> {
                                 TextButton(
                                   // padding: const EdgeInsets.fromLTRB(0, 15, 40, 20),
                                   child: Image.asset('assets/favorite.png',
-                                      fit: BoxFit.contain, height: 65),
+                                      fit: BoxFit.contain, height: 73),
                                   onPressed: () {
                                     //찜 목록으로 가야함
                                     Navigator.pushNamed(context, '/favorite');
                                   },
                                 ),
-                                const SizedBox(height: 12),
                                 const Text(
                                   '찜',
                                   textAlign: TextAlign.center,
@@ -216,11 +141,8 @@ class _MorePageState extends State<MorePage> {
                             child: Column(
                               children: [
                                 TextButton(
-                                  // padding: EdgeInsets.fromLTRB(30, 15, 50, 20),
-                                  // icon: Icon(Icons.thumb_up, size: 60, color: Colors.yellowAccent),
-                                  //   child: Image.asset('assets/like.png', height: 90, width: 10),
                                   child: Image.asset('assets/review.png',
-                                      fit: BoxFit.contain, height: 80),
+                                      fit: BoxFit.contain, height: 73),
                                   onPressed: () {
                                     //나의 리뷰로 가야
                                     Navigator.pushNamed(context, '/myReview');
