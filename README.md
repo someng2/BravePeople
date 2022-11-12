@@ -1,16 +1,5 @@
-# hgu_21_2_mobileappdevelopment
+# 용기내는 사람들
 
-A new Flutter project.
+변화를 만드는 <b>용기</b>를 가진 사람들이 모여 다회용품 <b>용기</b> 사용에 참여하고, 
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+서로의 환경 보호 이야기를 나누는 공간입니다.
